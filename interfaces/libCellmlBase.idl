@@ -1,0 +1,32 @@
+/*	-*- IDL -*-
+ *   Copyright (C) 2004-2014 by The Auckland Bioengineering Institute at the University
+ *   of Auckland.
+ */
+/* This Source Code Form is subject to the terms of the Mozilla Public 
+ * License, v. 2.0. If a copy of the MPL was not distributed with this 
+ * file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+ */
+#ifndef IDL__LIBCELLMLBASE__INCLUDED
+#define IDL__LIBCELLMLBASE__INCLUDED
+
+/**
+ * Contains shared definitions.
+ * 
+ */
+module libCellmlBase
+{
+  /**
+   * This is used to represent a string of 8-bit bytes making up a UTF8 string.
+   */
+  typedef string utf8string;
+
+  /**
+   * This is used to represent a wider string. On the Mozilla side, this will
+   * be UTF16, although it may be UCS4 on other platforms, depending on the
+   * compiler and platform.
+   */
+  typedef wstring utf8wstring;
+
+};
+
+#endif

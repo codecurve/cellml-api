@@ -7,7 +7,7 @@
 #ifndef _DOM_IDL_
 #define _DOM_IDL_
 
-#include "xpcom.idl"
+#include "libCellmlBase.idl"
 
 
 /**
@@ -54,7 +54,7 @@ module dom
   const unsigned short      INVALID_ACCESS_ERR             = 15;
 
 
-  interface DOMImplementation : XPCOM::IObject {
+  interface DOMImplementation  {
     boolean            hasFeature(in DOMString feature, 
                                   in DOMString version);
     // Introduced in DOM Level 2:
@@ -69,7 +69,7 @@ module dom
                                         raises(DOMException);
   };
 
-  interface Node : XPCOM::IObject {
+  interface Node {
 
     // NodeType
     const unsigned short      ELEMENT_NODE                   = 1;
@@ -129,13 +129,13 @@ module dom
     boolean            hasAttributes();
   };
 
-  interface NodeList : XPCOM::IObject {
+  interface NodeList {
     Node               item(in unsigned long index);
     readonly attribute unsigned long    length;
   };
 #pragma cross-module-argument
 
-  interface NamedNodeMap : XPCOM::IObject {
+  interface NamedNodeMap {
     Node               getNamedItem(in DOMString name);
     Node               setNamedItem(in Node arg)
                                         raises(DOMException);

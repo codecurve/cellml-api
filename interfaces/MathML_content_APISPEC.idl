@@ -5,7 +5,7 @@
 #ifndef _MATHMLDOM_IDL_
 #define _MATHMLDOM_IDL_
 
-#include "xpcom.idl"
+#include "libCellmlBase.idl"
 #include "DOM_APISPEC.idl"
 
 /**
@@ -56,7 +56,7 @@ module mathml_dom
     readonly attribute MathMLMathElement ownerMathElement;
   };
   
-  interface MathMLContainer : XPCOM::IObject
+  interface MathMLContainer
   {
     readonly attribute unsigned long     nArguments;
     readonly attribute MathMLNodeList    arguments;

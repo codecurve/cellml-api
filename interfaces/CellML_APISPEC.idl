@@ -1,7 +1,7 @@
 #ifndef INCLUDED_CELLML_APISPEC
 #define INCLUDED_CELLML_APISPEC
 
-#include "xpcom.idl"
+#include "libCellmlBase.idl"
 #include "DOM_APISPEC.idl"
 #include "MathML_content_APISPEC.idl"
 
@@ -66,7 +66,7 @@ module cellml_api
   /**
    * This interface is the generic base class for all RDF representations.
    */
-  interface RDFRepresentation : XPCOM::IObject
+  interface RDFRepresentation
   {
     /**
      * Returns the URN for the type of representation this is.
@@ -115,7 +115,7 @@ module cellml_api
    * See also the optional AnnoTools service, which provides a higher-level
    * interface on top of this facility.
    */
-  interface UserData : XPCOM::IObject
+  interface UserData 
   {
   };
 #ifdef USERDATA_NEEDED
@@ -128,7 +128,7 @@ module cellml_api
    * This interface is implemented by the application to receive notification
    * when an asynchronous import instantiatiation is complete.
    */
-  interface ImportInstantiationListener : XPCOM::IObject
+  interface ImportInstantiationListener 
   {
     /**
      * This is called after imports have been instantiated.
@@ -156,7 +156,7 @@ module cellml_api
    * Represents a uniform resource indicator, conforming to RFC2396
    * (http://rfc.net/rfc2396.html).
    */
-  interface URI : XPCOM::IObject
+  interface URI 
   {
     /**
      * A representation of this string as text.
@@ -168,7 +168,7 @@ module cellml_api
   /**
    * This is a general interface from which all CellML elements inherit.
    */
-  interface CellMLElement : XPCOM::IObject
+  interface CellMLElement 
   {
     /**
      * The CellML version that this element corresponds to.
@@ -365,7 +365,7 @@ module cellml_api
    * this interface.
    */
   interface CellMLDOMElement
-    : XPCOM::IObject
+    
   {
     /**
      * The DOM element corresponding to this CellML element.
@@ -655,7 +655,7 @@ module cellml_api
 #pragma terminal-interface
 #pragma cross-module-argument
 
-  interface MathContainer : XPCOM::IObject
+  interface MathContainer 
   {
     /**
      * The set of all math defined here.
@@ -1345,7 +1345,7 @@ module cellml_api
   /**
    * An interface allowing CellMLElements to be iterated.
    */
-  interface CellMLElementIterator : XPCOM::IObject
+  interface CellMLElementIterator 
   {
     /**
      * Fetches the next CellML element, and advances the iterator.
@@ -1358,7 +1358,7 @@ module cellml_api
   /**
    * An interface allowing MathMLElements to be iterated.
    */
-  interface MathMLElementIterator : XPCOM::IObject
+  interface MathMLElementIterator 
   {
     /**
      * Fetches the next MathML element, and advances the iterator.
@@ -1371,7 +1371,7 @@ module cellml_api
   /**
    * A collection of extension elements.
    */
-  interface ExtensionElementList : XPCOM::IObject
+  interface ExtensionElementList 
   {
     /**
      * The length of the collection.
@@ -1404,7 +1404,7 @@ module cellml_api
   /**
    * A collection of math.
    */
-  interface MathList : XPCOM::IObject
+  interface MathList 
   {
     /**
      * The length of the collection.
@@ -1429,7 +1429,7 @@ module cellml_api
   /**
    * An interface for iterating through all extension attributes.
    */
-  interface ExtensionAttributeIterator : XPCOM::IObject
+  interface ExtensionAttributeIterator 
   {
     /**
      * Fetches the next extension attribute node.
@@ -1441,7 +1441,7 @@ module cellml_api
   /**
    * A set of extension attributes
    */
-  interface ExtensionAttributeSet : XPCOM::IObject
+  interface ExtensionAttributeSet 
   {
     /**
      * Returns a CellMLElementIterator that can be used to iterate through the
@@ -1455,7 +1455,7 @@ module cellml_api
   /**
    * An immutable collection of CellML elements.
    */
-  interface CellMLElementSet : XPCOM::IObject
+  interface CellMLElementSet 
   {
     /**
      * The length of the collection.
@@ -2012,7 +2012,7 @@ module cellml_api
    * be delivered. This is implemented by the application and not the API.
    */
   interface ModelLoadedListener
-    : XPCOM::IObject
+    
   {
     /**
      * Called when the model has been loaded.
@@ -2027,7 +2027,7 @@ module cellml_api
    * to be delivered.
    */
   interface DocumentLoadedListener
-    : XPCOM::IObject
+    
   {
     /**
      * Called when the document has been loaded.
@@ -2041,7 +2041,7 @@ module cellml_api
    * An interface for loading a CellML model (from URL or string).
    */
   interface ModelLoader
-    : XPCOM::IObject
+    
   {
     /**
      * Loads a model from the given URL, using the local URL loader.
@@ -2098,7 +2098,7 @@ module cellml_api
    * A DOM specific interface for loading a Document.
    */
   interface DOMURLLoader
-    : XPCOM::IObject
+    
   {
     /**
      * Loads an XML formatted document from a given URL into a DOM. This may
@@ -2204,7 +2204,7 @@ module cellml_api
    * bootstrap the CellML API.
    */
   interface CellMLBootstrap
-    : XPCOM::IObject
+    
   {
     /**
      * The model loader used to load models.
