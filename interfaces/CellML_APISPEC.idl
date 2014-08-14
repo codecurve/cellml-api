@@ -13,8 +13,7 @@ module cellml_api
 {
   /* Forward definitions... */
   interface Model;
-  interface Group;
-  interface MapComponents;
+  interface EncapsulationGroup;
   interface CellMLComponent;
   interface ImportComponent;
   interface ImportUnits;
@@ -23,13 +22,9 @@ module cellml_api
   interface CellMLImport;
   interface CellMLVariable;
   interface ComponentRef;
-  interface RelationshipRef;
   interface Connection;
   interface MapVariables;
-  interface Reaction;
-  interface ReactionSet;
   interface VariableRef;
-  interface Role;
   interface ExtensionElementList;
   interface ExtensionAttributeSet;
   interface MathList;
@@ -43,12 +38,10 @@ module cellml_api
   interface ImportUnitsSet;
   interface UnitSet;
   interface ConnectionSet;
-  interface GroupSet;
-  interface RelationshipRefSet;
+  interface EncapsulationGroupSet;
   interface ComponentRefSet;
   interface MapVariablesSet;
   interface VariableRefSet;
-  interface RoleSet;
 
   typedef dom::Element ExtensionElement;
 
