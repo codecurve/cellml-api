@@ -13,7 +13,7 @@ module cellml_api
 {
   /* Forward definitions... */
   interface Model;
-  interface EncapsulationGroup;
+  interface Encapsulation;
   interface CellMLComponent;
   interface ImportComponent;
   interface ImportUnits;
@@ -38,7 +38,6 @@ module cellml_api
   interface ImportUnitsSet;
   interface UnitSet;
   interface ConnectionSet;
-  interface EncapsulationGroupSet;
   interface ComponentRefSet;
   interface MapVariablesSet;
   interface VariableRefSet;
@@ -407,9 +406,11 @@ module cellml_api
     Model getAlternateVersion(in wstring cellmlVersion) raises(CellMLException);
     
     /**
-     * The collection of groups described in this model document.
+     * The collection of encapsulations described in this model document.
      */
-    readonly attribute GroupSet groups;
+    typedef sequence<Encapsulation> EncapsulationsT;
+
+    readonly attribute EncapsulationsT encapsulations;
 
     /**
      * The collection of imports described in this model document.
@@ -495,12 +496,6 @@ module cellml_api
     readonly attribute ConnectionSet connections;
 
     /**
-     * Returns all groups having the given relationship.
-     * @param name The name of the relationship to search for.
-     */
-    GroupSet findGroupsWithRelationshipRefName(in CellMLAttributeString name);
-
-    /**
      * This fully instantiates the import definitions. It will then recursively
      * instantiate all imports in the imported models.
      */
@@ -555,14 +550,9 @@ module cellml_api
     ComponentRef createComponentRef();
 
     /**
-     * Creates a new RelationshipRef.
+     * Creates a new Encapsulation.
      */
-    RelationshipRef createRelationshipRef();
-
-    /**
-     * Creates a new Group.
-     */
-    Group createGroup();
+    Encapsulation createEncapsulation();
 
     /**
      * Creates a new Connection. This also creates the MapComponents.
@@ -575,19 +565,9 @@ module cellml_api
     MapVariables createMapVariables();
 
     /**
-     * Creates a new Reaction.
-     */
-    Reaction createReaction();
-
-    /**
      * Creates a new VariableRef.
      */
     VariableRef createVariableRef();
-
-    /**
-     * Creates a new Role.
-     */
-    Role createRole();
 
     /**
      * Creates a new MathMLMathElement.
@@ -737,11 +717,6 @@ module cellml_api
      * across imports if imports have been instantiated.
      */
     readonly attribute CellMLComponentSet containmentChildren;
-
-    /**
-     * A set of all reaction elements contained within this component.
-     */
-    readonly attribute ReactionSet reactions;
 
     /**
      * Gets the 'import number' in which this component is contained.
@@ -1041,11 +1016,14 @@ module cellml_api
      */
     attribute CellMLAttributeString componentName;
 
+
+    typedef sequence<ComponentRef> ComponentRefsT;
+
     /**
      * A collection of component references which are beneath this one in the
      * group tree.
      */
-    readonly attribute ComponentRefSet componentRefs;
+    readonly attribute ComponentRefsT componentRefs;
 
     /**
      * The parent component reference, or nil if this is the toplevel
@@ -1054,9 +1032,9 @@ module cellml_api
     readonly attribute ComponentRef parentComponentRef;
 
     /**
-     * The parent group in which the component reference is found.
+     * The parent encapsulation in which the component reference is found.
      */
-    readonly attribute Group parentGroup;
+    readonly attribute Encapsulation encapsulationParent;
   };
 #pragma terminal-interface
 
@@ -1094,33 +1072,14 @@ module cellml_api
 #pragma terminal-interface
 
   /**
-   * Represents a &lt;group> element.
+   * Represents a &lt;encapsulation> element.
    */
-  interface Group : CellMLElement
+  interface Encapsulation : CellMLElement
   {
-    /**
-     * The collection of relationship references.
-     */
-    readonly attribute RelationshipRefSet relationshipRefs;
-
     /**
      * The collection of component references.
      */
     readonly attribute ComponentRefSet componentRefs;
-
-    /**
-     * True if this is an encapsulation relationship
-     * (with relationship on relationship_ref in the CellML namespace)
-     * and false otherwise.
-     */
-    readonly attribute boolean isEncapsulation;
-
-    /**
-     * True if this is a containment relationship
-     * (with relationship on relationship_ref in the CellML namespace)
-     * and false otherwise.
-     */
-    readonly attribute boolean isContainment;
   };
 #pragma terminal-interface
 
@@ -1131,23 +1090,10 @@ module cellml_api
     : CellMLElement
   {
     /**
-     * The map_components element in this connection.
-     */
-    readonly attribute MapComponents componentMapping;
-
-    /**
      * A collection of the map_variables elements in this connection.
      */
     readonly attribute MapVariablesSet variableMappings;
-  };
-#pragma terminal-interface
 
-  /**
-   * An interface the map_components element.
-   */
-  interface MapComponents
-    : CellMLElement
-  {
     /**
      * The name of the first component. The returned name shall be the same
      * name as found in the component_1 attribute(that is, the implementation
@@ -1284,11 +1230,6 @@ module cellml_api
      * The name of the variable being referenced.
      */
     attribute wstring variableName;
-
-    /**
-     * A collection of all the Roles that this VariableRef plays in this reaction.
-     */
-    readonly attribute RoleSet roles;
   };
 #pragma terminal-interface
 
@@ -1771,82 +1712,6 @@ module cellml_api
      * connection elements. The iteration order is undefined.
      */
     ConnectionIterator iterateConnections();
-  };
-#pragma terminal-interface
-
-  /**
-   * An interface allow Group elements to be iterated.
-   */
-  interface GroupIterator : CellMLElementIterator
-  {
-    /**
-     * Fetches the next Group, and advances the iterator.
-     * @return The next Group, or nil if there are no more Group
-     *         elements.
-     */
-    Group nextGroup();
-  };
-#pragma terminal-interface
-
-  /**
-   * An interface for accessing a set of Group elements.
-   */
-  interface GroupSet
-    : CellMLElementSet
-  {
-    /**
-     * Returns a GroupIterator that can be used to iterate through the
-     * group elements. The iteration order is undefined.
-     */
-    GroupIterator iterateGroups();
-
-    /**
-     * Returns the subset of this set containing groups involving a particular
-     * relationship.
-     * @param relName The relationship groups must contain to be in the returned set.
-     * @return GroupSet The new set of groups.
-     */
-    GroupSet getSubsetInvolvingRelationship(in CellMLAttributeString relName);
-
-    /**
-     * The subset of all groups in this collection involving
-     * encapsulation.
-     */
-    readonly attribute GroupSet subsetInvolvingEncapsulation;
-
-    /**
-     * The subset of all groups in this collection involving
-     * containment.
-     */
-    readonly attribute GroupSet subsetInvolvingContainment;
-  };
-#pragma terminal-interface
-  
-  /**
-   * An interface allowing RelationshipRef elements to be iterated.
-   */
-  interface RelationshipRefIterator : CellMLElementIterator
-  {
-    /**
-     * Fetches the next RelationshipRef, and advances the iterator.
-     * @return The next RelationshipRef, or nil if there are no more
-     *         RelationshipRef elements.
-     */
-    RelationshipRef nextRelationshipRef();
-  };
-#pragma terminal-interface
-
-  /**
-   * An interface for accessing a set of RelationshipRef elements.
-   */
-  interface RelationshipRefSet
-    : CellMLElementSet
-  {
-    /**
-     * Returns a RelationshipRefIterator that can be used to iterate through the
-     * RelationshipRef elements. The iteration order is undefined.
-     */
-    RelationshipRefIterator iterateRelationshipRefs();
   };
 #pragma terminal-interface
 
