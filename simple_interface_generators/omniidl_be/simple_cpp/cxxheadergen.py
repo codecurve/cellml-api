@@ -115,6 +115,10 @@ class Walker(idlvisitor.AstVisitor):
         self.cxxheader.out('static const char* INTERFACE_NAME() { return "' + node.corbacxxscoped + '"; }')
         self.cxxheader.out('virtual ~' + node.simplename + '() {}')
         for n in node.contents():
+            if isinstance(n, idlast.Decl) :
+                cs = n.comments()
+                for c in cs :
+                    self.cxxheader.out(c.text())
             n.accept(self)
         self.cxxheader.dec_indent()
         self.cxxheader.out('};')

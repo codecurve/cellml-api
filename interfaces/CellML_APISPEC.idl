@@ -49,7 +49,7 @@ module cellml_api
    * serialised CellML. Character data in XML can be any Unicode character;
    * the sequence of characters must conform to the rules of XML character data
    * (which define escaping of reserved characters etc).
-   * @see http://www.w3.org/TR/REC-xml/#syntax
+   * @@see http://www.w3.org/TR/REC-xml/#syntax
    */
   typedef wstring CellMLAttributeString;
 
@@ -124,7 +124,7 @@ module cellml_api
   {
     /**
      * This is called after imports have been instantiated.
-     * @param wasStale If an xlink:href was changed while the corresponding
+     * @@param wasStale If an xlink:href was changed while the corresponding
      *                 import was loading.
      */
     void loadCompleted(in boolean wasStale);
@@ -184,36 +184,36 @@ module cellml_api
     /**
      * Insert an element into the collection of extension elements without
      * disturbing the order of the existing elements.
-     * @param marker The element after which to insert the element. If this is
+     * @@param marker The element after which to insert the element. If this is
      *               nil, then the insertion will be at the start of the list.
-     * @param newEl The new element to insert.
+     * @@param newEl The new element to insert.
      */
     void insertExtensionElementAfter(in ExtensionElement marker, in ExtensionElement newEl);
 
     /**
      * Equivalent to insertExtensionElementAfter(last extension element, x).
-     * @param x The element to append.
+     * @@param x The element to append.
      */
     void appendExtensionElement(in ExtensionElement x);
 
     /**
      * Equivalent to insertExtensionElementAfter(nil, x)
-     * @param x The element to prepend.
+     * @@param x The element to prepend.
      */
     void prependExtensionElement(in ExtensionElement x);
 
     /**
      * Remove an extension element. If the element is not found,
      * do nothing.
-     * @param x The element to remove.
+     * @@param x The element to remove.
      */
     void removeExtensionElement(in ExtensionElement x);
 
     /**
      * Find an extension element, and if it is found, replace it
      * with another element.
-     * @param x The element to find.
-     * @param y The element to replace x with.
+     * @@param x The element to find.
+     * @@param y The element to replace x with.
      */
     void replaceExtensionElement(in ExtensionElement x, in ExtensionElement y);
 
@@ -233,24 +233,24 @@ module cellml_api
      * and if it is not, an exception is raised. Checking is also performed to
      * ensure that the element belongs in this Model, and that it is not
      * already inserted into the document.
-     * @param x The CellMLElement to add.
-     * @exception CellMLException if the element cannot be added to this Element.
+     * @@param x The CellMLElement to add.
+     * @@exception CellMLException if the element cannot be added to this Element.
      */
     void addElement(in CellMLElement x) raises(CellMLException);
 
     /**
      * Removes a CellML element from this element.
-     * @param x The CellMLElement to remove.
+     * @@param x The CellMLElement to remove.
      */
     void removeElement(in CellMLElement x);
 
     /**
      * Removes a CellML element from this element, and replaces it with another
      * CellML element.
-     * @exception CellMLException if the new element is of a type not allowed in
+     * @@exception CellMLException if the new element is of a type not allowed in
      *                            this Element type, or belongs to the wrong Model.
-     * @param x The CellMLElement to remove.
-     * @param y The CellMLElement to add.
+     * @@param x The CellMLElement to remove.
+     * @@param y The CellMLElement to add.
      */
     void replaceElement(in CellMLElement x, in CellMLElement y)
       raises(CellMLException);
@@ -258,8 +258,8 @@ module cellml_api
     /**
      * Remove a CellML element by name, or do nothing if that element is not
      * found.
-     * @param type The type of element("variable", "component", etc...)
-     * @param name The name to remove.
+     * @@param type The type of element("variable", "component", etc...)
+     * @@param name The name to remove.
      */
     void removeByName(in CellMLAttributeString type,
                       in CellMLAttributeString name);
@@ -286,25 +286,25 @@ module cellml_api
      * defining the meaning of the key.
      * If the key already exists, then the existing user-data should be removed
      * and the new user-data added.
-     * @param key  A string to identify the annotation.
-     * @param data The data to set, or nil to clear the UserData for a key.
+     * @@param key  A string to identify the annotation.
+     * @@param data The data to set, or nil to clear the UserData for a key.
      */
     void setUserData(in wstring key, in UserData data);
 
     /**
      * Retrieves user-supplied annotations previously set on this element.
-     * @param key A string to identify the annotation.
-     * @return The user-data associated with the key.
-     * @exception CellMLException if no UserData is set for the given key.
+     * @@param key A string to identify the annotation.
+     * @@return The user-data associated with the key.
+     * @@exception CellMLException if no UserData is set for the given key.
      */
     UserData getUserData(in wstring key) raises(CellMLException);
 
     /**
      * Retrieves user-supplied annotations previously set on this element,
      * or the default value.
-     * @param key A string to identify the annotation.
-     * @param defval A default value to return if the key isn't found.
-     * @return The user-data associated with the key or the default value.
+     * @@param key A string to identify the annotation.
+     * @@param defval A default value to return if the key isn't found.
+     * @@return The user-data associated with the key or the default value.
      */
     UserData getUserDataWithDefault(in wstring key, in UserData defval) raises(CellMLException);
 
@@ -312,7 +312,7 @@ module cellml_api
     /**
      * Clones a CellMLElement, and optionally all children.
      * This will not clone the contents of imported models.
-     * @param deep If false, only clones the element. It will then have no children.
+     * @@param deep If false, only clones the element. It will then have no children.
      *             If true, clones the element, and its children, which are added
      *               into the new element.
      */
@@ -320,25 +320,25 @@ module cellml_api
 
     /**
      * Fetches an extension attribute.
-     * @param ns The namespace of the extension attribute to fetch.
-     * @param localName The local name of the attribute to fetch.
+     * @@param ns The namespace of the extension attribute to fetch.
+     * @@param localName The local name of the attribute to fetch.
      */
     wstring getExtensionAttributeNS(in wstring ns, in wstring localName);
 
     /**
      * Sets an extension attribute (adding it if it doesn't already exist,
      * otherwise replacing it).
-     * @param ns The namespace of the extension attribute to set.
-     * @param qualifiedName The qualified name of the attribute to set.
-     * @param value The value to set the attribute to.
+     * @@param ns The namespace of the extension attribute to set.
+     * @@param qualifiedName The qualified name of the attribute to set.
+     * @@param value The value to set the attribute to.
      */
     void setExtensionAttributeNS(in wstring ns, in wstring qualifiedName, in wstring value);
 
     /**
      * Removes an extension attribute. No action is taken if the attribute is
      * not already present.
-     * @param ns The namespace of the extension attribute to remove.
-     * @param localName The local name of the attribute to remove.
+     * @@param ns The namespace of the extension attribute to remove.
+     * @@param localName The local name of the attribute to remove.
      */
     void removeExtensionAttributeNS(in wstring ns, in wstring localName);
 
@@ -367,8 +367,8 @@ module cellml_api
     /**
      * Retrieves the CellMLElement corresponding to a dom::Element, if one
      * exists. Otherwise, returns null.
-     * @param x The DOM element to look up.
-     * @return The corresponding CellML element, or null.
+     * @@param x The DOM element to look up.
+     * @@return The corresponding CellML element, or null.
      */
     CellMLElement findCellMLElementFromDOMElement(in dom::Element x);
   };
@@ -399,9 +399,9 @@ module cellml_api
      * with import elements in the CellML 1.0 namespace). Applications should
      * use a flattening ModelTransformationService if they wish to change
      * CellML 1.1 import structures into valid CellML 1.0 constructs.
-     * @param cellmlVersion The new version of CellML. The string should be 1.0
+     * @@param cellmlVersion The new version of CellML. The string should be 1.0
      *                      or 1.1
-     * @exception CellMLException if the version is not supported by the API.
+     * @@exception CellMLException if the version is not supported by the API.
      */
     Model getAlternateVersion(in wstring cellmlVersion) raises(CellMLException);
     
@@ -421,7 +421,7 @@ module cellml_api
      * The xml:base URI. If the attribute doesn't exist, retrieving asText on
      * the URI returns the empty string (and doesn't create the attribute),
      * while setting asText creates the attribute.
-     * @deprecated Use xmlBase. This method may be removed from a
+     * @@deprecated Use xmlBase. This method may be removed from a
      *             future release of the CellML API.
      */
     readonly attribute URI base_uri;
@@ -505,7 +505,7 @@ module cellml_api
      * This starts an asynchronous full instantiatation of the import
      * definitions. It will then recursively instantiate all imports in the
      * imported models.
-     * @param listener A listener which will be notified when imports are instantiated.
+     * @@param listener A listener which will be notified when imports are instantiated.
      */
     void asyncFullyInstantiateImports(in ImportInstantiationListener listener);
 
@@ -571,14 +571,14 @@ module cellml_api
 
     /**
      * Creates a new MathMLMathElement.
-     * @return The new MathML math element.
+     * @@return The new MathML math element.
      */
     mathml_dom::MathMLMathElement createMathElement();
 
     /**
      * Creates a new extension element.
-     * @param namespaceURI The new namespace URI.
-     * @param qualifiedName The new (optionally) qualified name.
+     * @@param namespaceURI The new namespace URI.
+     * @@param qualifiedName The new (optionally) qualified name.
      */
     dom::Element createExtensionElement(in dom::DOMString namespaceURI,
                                         in dom::DOMString qualifiedName);
@@ -591,14 +591,14 @@ module cellml_api
 
     /**
      * The RDF metadata associated with all elements in this document.
-     * @param type The URN describing the type of RDF metadata. Implementations
+     * @@param type The URN describing the type of RDF metadata. Implementations
      *             are free to add new types by creating new type names at URNs
      *             under their jurisdiction. New URNs under http://www.cellml.org
      *             are reserved for future versions of this specification.
-     * @return The object containing the RDF representation. The object may
+     * @@return The object containing the RDF representation. The object may
      *         be cast in an application defined manner depending on the type
      *         returned.
-     * @exception CellMLException if type isn't supported.
+     * @@exception CellMLException if type isn't supported.
      * All implementations must implement the following types:
      *             http://www.cellml.org/RDFXML/string
      *             http://www.cellml.org/RDFXML/DOM
@@ -609,7 +609,7 @@ module cellml_api
     /**
      * Clones a Model, including all of its imports.
      * Will cause the model to be fully instantiated.
-     * @exception CellMLException if problems occur instantiating imports.
+     * @@exception CellMLException if problems occur instantiating imports.
      */
     Model cloneAcrossImports() raises(CellMLException);
 
@@ -637,16 +637,16 @@ module cellml_api
 
     /**
      * Add an element to this collection.
-     * @param x The element to add.
-     * @exception CellMLException if the element cannot be added to this MathContainer.
+     * @@param x The element to add.
+     * @@exception CellMLException if the element cannot be added to this MathContainer.
      */
     void addMath(in MathMLElement x) raises(CellMLException);
 
     /**
      * Remove an element from this collection. If the element is not found,
      * do nothing.
-     * @param x The element to remove.
-     * @exception CellMLException if the type of element is such that removing the
+     * @@param x The element to remove.
+     * @@exception CellMLException if the type of element is such that removing the
      *                            element from the DOM is not permissible. This exception
      *                            is not raised merely because x is not in the MathContainer.
      */
@@ -655,9 +655,9 @@ module cellml_api
     /**
      * Find an element in this collection, and if it is found, replace it
      * with another element.
-     * @param x The element to find.
-     * @param y The element to replace x with.
-     * @exception CellMLException If y is not valid according to the constraints
+     * @@param x The element to find.
+     * @@param y The element to replace x with.
+     * @@exception CellMLException If y is not valid according to the constraints
      *                            on this collection (check optional).
      */
     void replaceMath(in MathMLElement x, in MathMLElement y);
@@ -822,14 +822,14 @@ module cellml_api
     /**
      * Causes the model referenced by the href attribute to be asynchronously
      * loaded using the same model loader used to load this model.
-     * @param listener The listener to load the model with.
+     * @@param listener The listener to load the model with.
      */
     void asyncInstantiate(in ImportInstantiationListener listener);
 
     /**
      * Causes this import to be instantiated from text.
-     * @param xmlText The serialised XML document for the import.
-     * @exception CellMLException if xmlText is not valid.
+     * @@param xmlText The serialised XML document for the import.
+     * @@exception CellMLException if xmlText is not valid.
      */
     void instantiateFromText(in dom::DOMString xmlText)
       raises(CellMLException);
@@ -930,7 +930,7 @@ module cellml_api
 
     /**
      * Whether the initial value attribute is a number, or names a variable.
-     * @return false if the initial_value attribute represents a number,
+     * @@return false if the initial_value attribute represents a number,
      *         and true otherwise.
      */
     readonly attribute boolean initialValueFromVariable;
@@ -941,13 +941,13 @@ module cellml_api
      * returns null. Note that this can happen even if initialValueFromVariable returns
      * true, because the initial_value attribute might refer to a variable which
      * doesn't (yet) exist in the component. Setting to null deletes the attribute.
-     * @throw CellMLException If set to a variable not in the same component.
+     * @@throw CellMLException If set to a variable not in the same component.
      */
     attribute CellMLVariable initialValueVariable;
 
     /**
      * The initial value of the variable, as a double.
-     * @throw CellMLException If the initial_value attribute is malformed, missing,
+     * @@throw CellMLException If the initial_value attribute is malformed, missing,
      *                        or refers to a variable.
      */
     attribute double initialValueValue;
@@ -1063,8 +1063,8 @@ module cellml_api
     /**
      * Sets the namespace and relationship name. This will remove any other
      * relationship attributes in any namespace.
-     * @param namespaceURI The URI of the namespace 
-     * @param name The name of the relationship.
+     * @@param namespaceURI The URI of the namespace 
+     * @@param name The name of the relationship.
      */
     void setRelationshipName(in CellMLAttributeString namespaceURI,
                              in CellMLAttributeString name);
@@ -1134,7 +1134,7 @@ module cellml_api
      * MapVariables is added to a Connection, and the Connection has in turn
      * been added to a model. It also requires that the component name has
      * already been set.
-     * @exception CellMLException if the MapVariables has not been added to a
+     * @@exception CellMLException if the MapVariables has not been added to a
      *                            Connection, or the Connection has not been added
      *                            to the Model.
      */
@@ -1146,7 +1146,7 @@ module cellml_api
      * MapVariables is added to a Connection, and the Connection has in turn
      * been added to a model. It also requires that the component name has
      * already been set.
-     * @exception CellMLException if the MapVariables has not been added to a
+     * @@exception CellMLException if the MapVariables has not been added to a
      *                            Connection, or the Connection has not been added
      *                            to the Model.
      */
@@ -1194,9 +1194,9 @@ module cellml_api
 
     /**
      * Fetches a VariableRef by the variable name.
-     * @param varName The name of the variable, within this component.
-     * @param create Whether or not to create a VariableRef if not found.
-     * @return The variable reference corresponding to this variable.
+     * @@param varName The name of the variable, within this component.
+     * @@param create Whether or not to create a VariableRef if not found.
+     * @@return The variable reference corresponding to this variable.
      *   If no such VariableRef exists, then:
      *     i) If create is true, a new one is created and added to this
      *        reaction.
@@ -1206,8 +1206,8 @@ module cellml_api
 
     /**
      * Fetches a Role by the delta variable name.
-     * @param varName The name of the delta variable, within this component.
-     * @return The Role corresponding to this delta variable.
+     * @@param varName The name of the delta variable, within this component.
+     * @@return The Role corresponding to this delta variable.
      * If no such Role exists, then NULL is returned.
      */
     Role getRoleByDeltaVariable(in wstring varName);
@@ -1283,7 +1283,7 @@ module cellml_api
   {
     /**
      * Fetches the next CellML element, and advances the iterator.
-     * @return The next CellML element, or nil if there are no more CellML
+     * @@return The next CellML element, or nil if there are no more CellML
      *         elements.
      */
     CellMLElement next();
@@ -1296,7 +1296,7 @@ module cellml_api
   {
     /**
      * Fetches the next MathML element, and advances the iterator.
-     * @return The next MathML element, or nil if there are no more MathML
+     * @@return The next MathML element, or nil if there are no more MathML
      *         elements.
      */
     MathMLElement next();
@@ -1314,22 +1314,22 @@ module cellml_api
 
     /**
      * Tests for the existance of an element in the set.
-     * @param x The element to test for.
-     * @return true if the element is present, or false otherwise.
+     * @@param x The element to test for.
+     * @@return true if the element is present, or false otherwise.
      */
     boolean contains(in ExtensionElement x);
 
     /**
      * Finds the index of the given extension element.
-     * @param x The extension element to find.
-     * @return The index(first is 0) of the extension element, or -1 if the
+     * @@param x The extension element to find.
+     * @@return The index(first is 0) of the extension element, or -1 if the
      *         element is not found.
      */
     long getIndexOf(in ExtensionElement x);
 
     /**
      * Fetches the extension element at a certain index(starting from 0).
-     * @param index The index at which to fetch the extension element.
+     * @@param index The index at which to fetch the extension element.
      */
     ExtensionElement getAt(in unsigned long index);
   };
@@ -1347,8 +1347,8 @@ module cellml_api
 
     /**
      * Tests for the existance of an element in the set.
-     * @param x The element to test for.
-     * @return true if the element is present, or false otherwise.
+     * @@param x The element to test for.
+     * @@return true if the element is present, or false otherwise.
      */
     boolean contains(in MathMLElement x);
 
@@ -1398,8 +1398,8 @@ module cellml_api
 
     /**
      * Tests for the existance of an element in the set.
-     * @param x The element to test for.
-     * @return true if the element is present, or false otherwise.
+     * @@param x The element to test for.
+     * @@return true if the element is present, or false otherwise.
      */
     boolean contains(in CellMLElement x);
 
@@ -1419,8 +1419,8 @@ module cellml_api
   {
     /**
      * Fetch a NamedCellMLElement by name.
-     * @param name The name of the element
-     * @return The element, or nil if not found.
+     * @@param name The name of the element
+     * @@return The element, or nil if not found.
      */
     NamedCellMLElement get(in CellMLAttributeString name);
   };
@@ -1432,7 +1432,7 @@ module cellml_api
   {
     /**
      * Fetches the next Model, and advances the iterator.
-     * @return The next Model, or nil if there are no more Model elements.
+     * @@return The next Model, or nil if there are no more Model elements.
      */
     Model nextModel();
   };
@@ -1452,8 +1452,8 @@ module cellml_api
 
     /**
      * Fetch a Model by name.
-     * @param name The name of the Model
-     * @return The Model, or nil if not found.
+     * @@param name The name of the Model
+     * @@return The Model, or nil if not found.
      */
     Model getModel(in CellMLAttributeString name);
   };
@@ -1466,7 +1466,7 @@ module cellml_api
   {
     /**
      * Fetches the next CellMLComponent, and advances the iterator.
-     * @return The next CellMLComponent, or nil if there are no more
+     * @@return The next CellMLComponent, or nil if there are no more
      *         CellMLComponents.
      */
     CellMLComponent nextComponent();
@@ -1486,8 +1486,8 @@ module cellml_api
 
     /**
      * Fetch a component by name.
-     * @param name The name of the CellMLComponent.
-     * @return The CellMLComponent, or nil if not found.
+     * @@param name The name of the CellMLComponent.
+     * @@return The CellMLComponent, or nil if not found.
      */
     CellMLComponent getComponent(in CellMLAttributeString name);
   };
@@ -1500,7 +1500,7 @@ module cellml_api
   {
     /**
      * Fetches the next ImportComponent, and advances the iterator.
-     * @return The next ImportComponent, or nil if there are no more
+     * @@return The next ImportComponent, or nil if there are no more
      *         ImportComponents.
      */
     ImportComponent nextImportComponent();
@@ -1521,8 +1521,8 @@ module cellml_api
 
     /**
      * Fetch an ImportComponent by name.
-     * @param name The name of the component, as given by the importing model.
-     * @return The element, or nil if not found.
+     * @@param name The name of the component, as given by the importing model.
+     * @@return The element, or nil if not found.
      */
     ImportComponent getImportComponent(in CellMLAttributeString name);
   };
@@ -1535,7 +1535,7 @@ module cellml_api
   {
     /**
      * Fetches the next CellMLVariable, and advances the iterator.
-     * @return The next CellMLVariable, or nil if there are no more
+     * @@return The next CellMLVariable, or nil if there are no more
      *         CellMLVariable elements.
      */
     CellMLVariable nextVariable();
@@ -1556,8 +1556,8 @@ module cellml_api
 
     /**
      * Fetch a variable by name.
-     * @param name The name of the variable.
-     * @return The CellMLVariable, or nil if not found.
+     * @@param name The name of the variable.
+     * @@return The CellMLVariable, or nil if not found.
      */
     CellMLVariable getVariable(in CellMLAttributeString name);
   };
@@ -1570,7 +1570,7 @@ module cellml_api
   {
     /**
      * Fetches the next Units element, and advances the iterator.
-     * @return The next Units element, or nil if there are no more Units
+     * @@return The next Units element, or nil if there are no more Units
      *         elements.
      */
     Units nextUnits();
@@ -1590,8 +1590,8 @@ module cellml_api
 
     /**
      * Fetch a Units element by name.
-     * @param name The name of the units.
-     * @return The Units element, or nil if not found.
+     * @@param name The name of the units.
+     * @@return The Units element, or nil if not found.
      */
     Units getUnits(in CellMLAttributeString name);
   };
@@ -1603,7 +1603,7 @@ module cellml_api
   {
     /**
      * Fetches the next ImportUnits element, and advances the iterator.
-     * @return The next ImportUnits element, or nil if there are no more
+     * @@return The next ImportUnits element, or nil if there are no more
      * ImportUnits elements.
      */
     ImportUnits nextImportUnits();
@@ -1624,9 +1624,9 @@ module cellml_api
 
     /**
      * Fetch a ImportUnits by name.
-     * @param name The name of the units definition, as given by the
+     * @@param name The name of the units definition, as given by the
      *             importing model.
-     * @return The ImportUnits, or nil if not found.
+     * @@return The ImportUnits, or nil if not found.
      */
     ImportUnits getImportUnits(in CellMLAttributeString name);
   };
@@ -1639,7 +1639,7 @@ module cellml_api
   {
     /**
      * Fetches the next import, and advances the iterator.
-     * @return The next import, or nil if there are no more imports.
+     * @@return The next import, or nil if there are no more imports.
      */
     CellMLImport nextImport();
   };
@@ -1666,7 +1666,7 @@ module cellml_api
   {
     /**
      * Fetches the next Unit element, and advances the iterator.
-     * @return The next Unit element, or nil if there are no more Unit
+     * @@return The next Unit element, or nil if there are no more Unit
      *         elements.
      */
     Unit nextUnit();
@@ -1694,7 +1694,7 @@ module cellml_api
   {
     /**
      * Fetches the next Connection, and advances the iterator.
-     * @return The next Connection, or nil if there are no more Connection
+     * @@return The next Connection, or nil if there are no more Connection
      *         elements.
      */
     Connection nextConnection();
@@ -1722,7 +1722,7 @@ module cellml_api
   {
     /**
      * Fetches the next ComponentRef, and advances the iterator.
-     * @return The next ComponentRef, or nil if there are no more
+     * @@return The next ComponentRef, or nil if there are no more
      *         ComponentRef elements.
      */
     ComponentRef nextComponentRef();
@@ -1750,16 +1750,16 @@ module cellml_api
   {
     /**
      * Fetches the next MapVariables element, and advances the iterator.
-     * @return The next MapVariables element, or nil if there are no more
+     * @@return The next MapVariables element, or nil if there are no more
      *         MapVariables elements.
-     * @deprecated Use nextMapVariables(). This method may be removed from a
+     * @@deprecated Use nextMapVariables(). This method may be removed from a
      *             future release of the CellML API.
      */
     MapVariables nextMapVariable();
 
     /**
      * Fetches the next MapVariables element, and advances the iterator.
-     * @return The next MapVariables element, or nil if there are no more
+     * @@return The next MapVariables element, or nil if there are no more
      *         MapVariables elements.
      */
     MapVariables nextMapVariables();
@@ -1788,7 +1788,7 @@ module cellml_api
   {
     /**
      * Fetches the next Reaction, and advances the iterator.
-     * @return The next Reaction, or nil if there are no more Reaction
+     * @@return The next Reaction, or nil if there are no more Reaction
      *         elements.
      */
     Reaction nextReaction();
@@ -1816,7 +1816,7 @@ module cellml_api
   {
     /**
      * Fetches the next VariableRef, and advances the iterator.
-     * @return The next VariableRef, or nil if there are no more VariableRef
+     * @@return The next VariableRef, or nil if there are no more VariableRef
      *         elements.
      */
     VariableRef nextVariableRef();
@@ -1844,7 +1844,7 @@ module cellml_api
   {
     /**
      * Fetches the next Role, and advances the iterator.
-     * @return The next Role, or nil if there are no more Role
+     * @@return The next Role, or nil if there are no more Role
      *         elements.
      */
     Role nextRole();
@@ -1874,7 +1874,7 @@ module cellml_api
   {
     /**
      * Called when the model has been loaded.
-     * @param m The model which has just been loaded.
+     * @@param m The model which has just been loaded.
      */
     void loadCompleted(in Model m);
   };
@@ -1889,7 +1889,7 @@ module cellml_api
   {
     /**
      * Called when the document has been loaded.
-     * @param doc The document which has just been loaded.
+     * @@param doc The document which has just been loaded.
      */
     void loadCompleted(in dom::Document doc);
   };
@@ -1906,9 +1906,9 @@ module cellml_api
      * Note that this operation may be unavailable (or restricted to certain
      * URLs) due to security restrictions on some remotely hosted model
      * loaders.
-     * @param URL The URL from which to load the model.
-     * @return The loaded CellML model.
-     * @exception CellMLException if the model cannot be loaded.
+     * @@param URL The URL from which to load the model.
+     * @@return The loaded CellML model.
+     * @@exception CellMLException if the model cannot be loaded.
      */
     Model loadFromURL(in dom::DOMString URL)
       raises(CellMLException);
@@ -1919,18 +1919,18 @@ module cellml_api
      * certain URLs) due to security restrictions on some remotely hosted model
      * loaders. Applications should be aware that the loadCompleted operation on
      * listener may be called prior to the return on this operation.
-     * @param URL The URL from which to load the model.
-     * @param listener A ModelLoadedListener to inform when loading completes.
-     * @exception CellMLException if the model cannot be loaded.
+     * @@param URL The URL from which to load the model.
+     * @@param listener A ModelLoadedListener to inform when loading completes.
+     * @@exception CellMLException if the model cannot be loaded.
      */
     void asyncLoadFromURL(in dom::DOMString URL,
                           in ModelLoadedListener listener);
 
     /**
      * Loads a model from a serialised XML document.
-     * @param xmlText A complete XML document, serialised into text.
-     * @return The loaded CellML model.
-     * @exception CellMLException if the XML cannot be parsed into a model.
+     * @@param xmlText A complete XML document, serialised into text.
+     * @@return The loaded CellML model.
+     * @@exception CellMLException if the XML cannot be parsed into a model.
      */
     Model createFromText(in dom::DOMString xmlText)
       raises(CellMLException);
@@ -1962,9 +1962,9 @@ module cellml_api
      * Loads an XML formatted document from a given URL into a DOM. This may
      * be restricted to certain URLs due to security restrictions on some
      * remotely hosted URL loaders.
-     * @param URL The URL from which to load the document.
-     * @return The loaded document.
-     * @exception CellMLException if the model cannot be loaded.
+     * @@param URL The URL from which to load the document.
+     * @@return The loaded document.
+     * @@exception CellMLException if the model cannot be loaded.
      */
     dom::Document loadDocument(in dom::DOMString URL)
       raises(CellMLException);
@@ -1972,9 +1972,9 @@ module cellml_api
     /**
      * Loads an XML formatted document from the given serialised text into a
      * DOM representation.
-     * @param xmlText The serialised XML used to create the document.
-     * @return The loaded document.
-     * @exception CellMLException if the model cannot be loaded.
+     * @@param xmlText The serialised XML used to create the document.
+     * @@return The loaded document.
+     * @@exception CellMLException if the model cannot be loaded.
      */
     dom::Document loadDocumentFromText(in dom::DOMString xmlText)
       raises(CellMLException);
@@ -1983,9 +1983,9 @@ module cellml_api
      * Asynchronously loads an XML formatted document from a given URL into a
      * DOM. This may be restricted to certain URLs due to security restrictions
      * on some remotely hosted URL loaders.
-     * @param URL The URL from which to load the document.
-     * @param listener The listener to notify when the load completes.
-     * @exception CellMLException if the model cannot be loaded.
+     * @@param URL The URL from which to load the document.
+     * @@param listener The listener to notify when the load completes.
+     * @@exception CellMLException if the model cannot be loaded.
      */
     void asyncLoadDocument(in dom::DOMString URL,
                            in DocumentLoadedListener listener)
@@ -2022,10 +2022,10 @@ module cellml_api
      * Loads the DOM for the model from the specified URL using the supplied
      * DOMURLLoader. If further URLs need to be loaded (for example, to satisfy
      * imports), the supplied loader will be used.
-     * @param url The URL from which to load.
-     * @param loader The URL loader to load the model and any imports needed.
-     * @return The loaded model.
-     * @exception CellMLException if there is an error loading the model or the
+     * @@param url The URL from which to load.
+     * @@param loader The URL loader to load the model and any imports needed.
+     * @@return The loaded model.
+     * @@exception CellMLException if there is an error loading the model or the
      *                            DOM document.
      */
     Model createFromDOM(in dom::DOMString url, in DOMURLLoader loader)
@@ -2033,9 +2033,9 @@ module cellml_api
 
     /**
      * Creates a model around an existing DOM document.
-     * @param doc The DOM document.
-     * @return The model.
-     * @exception CellMLException if there is an error creating the model from
+     * @@param doc The DOM document.
+     * @@return The model.
+     * @@exception CellMLException if there is an error creating the model from
      *                            the DOM document.
      */
     Model createFromDOMDocument(in dom::Document doc)
@@ -2045,10 +2045,10 @@ module cellml_api
      * Loads the DOM for the model from the specified URL using the supplied
      * DOMURLLoader. If further URLs need to be loaded (for example, to satisfy
      * imports), the supplied loader will be used.
-     * @param url The URL from which to load.
-     * @param loader The URL loader to load the model and any imports needed.
-     * @param listener A listener to notify when the model is fully loaded.
-     * @exception CellMLException if there is an error loading the model or the
+     * @@param url The URL from which to load.
+     * @@param loader The URL loader to load the model and any imports needed.
+     * @@param listener A listener to notify when the model is fully loaded.
+     * @@exception CellMLException if there is an error loading the model or the
      *                            DOM document.
      */
     void asyncCreateFromDOM(in dom::DOMString url, in DOMURLLoader loader,
@@ -2083,26 +2083,26 @@ module cellml_api
 
     /**
      * Creates a new, empty, model.
-     * @param version The version of the new model. This currently must be
+     * @@param version The version of the new model. This currently must be
      *                1.0 or 1.1.
-     * @exception CellMLException If an invalid version is given.
+     * @@exception CellMLException If an invalid version is given.
      */
     Model createModel(in wstring version) raises (CellMLException);
 
     /**
      * Serialises a DOM node into a string. The node to serialise must have
      * originated from the locally hosted DOM implementation.
-     * @param node The DOM node to serialise.
-     * @return The node, as a serialised string.
+     * @@param node The DOM node to serialise.
+     * @@return The node, as a serialised string.
      */
     dom::DOMString serialiseNode(in dom::Node node);
 
     /**
      * Tries to make a relative URL absolute, using a URL specifying what the
      * URL is relative to.
-     * @param relTo The absolute URL to evaluate relative to.
-     * @param relURL A possibly relative URL to make absolute.
-     * @return An absolute URL, if it is possible to produce one, otherwise a relative one.
+     * @@param relTo The absolute URL to evaluate relative to.
+     * @@param relURL A possibly relative URL to make absolute.
+     * @@return An absolute URL, if it is possible to produce one, otherwise a relative one.
      */
     wstring makeURLAbsolute(in wstring relTo, in wstring relURL);
   };
