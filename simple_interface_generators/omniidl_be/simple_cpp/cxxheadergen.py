@@ -26,14 +26,7 @@ class Walker(idlvisitor.AstVisitor):
         self.cxxheader.out("#ifndef _GUARD_IFACE_" + self.masterGuard)
         self.cxxheader.out("#define _GUARD_IFACE_" + self.masterGuard)
         self.cxxheader.out('#include "cda_compiler_support.h"')
-        self.cxxheader.out('#ifdef MODULE_CONTAINS_' + self.masterGuard)
-        self.cxxheader.out('#define PUBLIC_' + self.masterGuard + '_PRE CDA_EXPORT_PRE')
-        self.cxxheader.out('#define PUBLIC_' + self.masterGuard + '_POST CDA_EXPORT_POST')
-        self.cxxheader.out('#else')
-        self.cxxheader.out('#define PUBLIC_' + self.masterGuard + '_PRE CDA_IMPORT_PRE')
-        self.cxxheader.out('#define PUBLIC_' + self.masterGuard + '_POST CDA_IMPORT_POST')
-        self.cxxheader.out('#endif')
-        self.scope = ["iface"]
+        self.scope = []
         self.scopeEntryDepth = 0
         for n in node.declarations():
             if n.file() == self.masterFile:
@@ -41,8 +34,6 @@ class Walker(idlvisitor.AstVisitor):
             else:
                 self.considerIncluding(n.file())
         self.escapeScopes()
-        self.cxxheader.out('#undef PUBLIC_' + self.masterGuard + '_PRE')
-        self.cxxheader.out('#undef PUBLIC_' + self.masterGuard + '_POST')
         self.cxxheader.out("#endif // guard")
 
     def writeScopes(self):
@@ -81,6 +72,7 @@ class Walker(idlvisitor.AstVisitor):
         """Visit all the definitions in a module."""
         self.enterScope(node)
         for n in node.definitions():
+            self.cxxheader.out("\n")
             if isinstance(n, idlast.Decl) :
                 cs = n.comments()
                 for c in cs :
@@ -97,9 +89,7 @@ class Walker(idlvisitor.AstVisitor):
         self.cxxheader.out('class ' + node.simplename + ';')
 
     def visitInterface(self, node):
-	self.cxxheader.out('PUBLIC_' + self.masterGuard + '_PRE ')
-        self.cxxheader.out('class  PUBLIC_' + self.masterGuard + '_POST ' +
-                           node.simplename)
+        self.cxxheader.out('class ' + node.simplename)
         inh = node.inherits()
         if len(inh) > 0:
 	    inhs = ''
@@ -120,6 +110,7 @@ class Walker(idlvisitor.AstVisitor):
         self.cxxheader.out('static const char* INTERFACE_NAME() { return "' + node.corbacxxscoped + '"; }')
         self.cxxheader.out('virtual ~' + node.simplename + '() {}')
         for n in node.contents():
+            self.cxxheader.out("\n")
             if isinstance(n, idlast.Decl) :
                 cs = n.comments()
                 for c in cs :
@@ -183,8 +174,7 @@ class Walker(idlvisitor.AstVisitor):
                            ' ' + node.simplename + ';')
     
     def visitException(self, node):
-	self.cxxheader.out('PUBLIC_' + self.masterGuard + '_PRE ')
-        self.cxxheader.out('class  PUBLIC_' + self.masterGuard + '_POST ' + node.simplename + ' : public std::exception')
+        self.cxxheader.out('class' + node.simplename + ' : public std::exception')
         self.cxxheader.out('{')
         self.cxxheader.out('public:')
         self.cxxheader.inc_indent()
