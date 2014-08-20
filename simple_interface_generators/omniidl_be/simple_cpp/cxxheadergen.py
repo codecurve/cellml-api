@@ -81,6 +81,11 @@ class Walker(idlvisitor.AstVisitor):
         """Visit all the definitions in a module."""
         self.enterScope(node)
         for n in node.definitions():
+            if isinstance(n, idlast.Decl) :
+                cs = n.comments()
+                for c in cs :
+                    self.cxxheader.out(c.text())
+
             if n.file() == self.masterFile:
                 self.writeScopes()
                 n.accept(self)
