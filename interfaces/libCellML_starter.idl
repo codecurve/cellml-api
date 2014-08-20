@@ -9,7 +9,7 @@
  * This module contains a description of the CellML Application Programming
  * Interface in the language-neutral IDL form.
  */
-module cellml_api
+module libcellml
 {
   /* Forward definitions... */
   interface Model;
