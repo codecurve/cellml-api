@@ -65,7 +65,7 @@ def typeToSimpleCXX(type, extrapointer=0, is_const=0, is_ret=0):
     elif tk == idltype.tk_array:
         return ckw + 'std::vector<' + prefixIndirect + type.decl().simplecxxscoped + suffixIndirect + '> ' + suffixIndirect + amp
     elif tk == idltype.tk_sequence:
-        base = typeToSimpleCXX(type.seqType(), 0, is_ret = 2)
+        base = typeToSimpleCXX(type.seqType(), 0, is_ret = 1)
         return ckw + 'std::vector<' + base + '>' + amp
     elif tk == idltype.tk_enum:
         return prefixIndirect + type.decl().simplecxxscoped + suffixIndirect
