@@ -59,7 +59,7 @@ def typeToSimpleCXX(type, extrapointer=0, is_const=0, is_ret=0):
         raise 'Principal is not supported'
     elif tk == idltype.tk_objref or tk == idltype.tk_struct:
         if is_ret == 1:
-            return prefixIndirect + 'already_AddRefd<' + type.decl().simplecxxscoped + '> ' + suffixIndirect
+            return prefixIndirect + 'std::shared_ptr<' + type.decl().simplecxxscoped + '> ' + suffixIndirect
         else:
             return prefixIndirect + type.decl().simplecxxscoped + '*' + suffixIndirect
     elif tk == idltype.tk_array:
