@@ -1,7 +1,7 @@
 #ifndef INCLUDED_CELLML_APISPEC
 #define INCLUDED_CELLML_APISPEC
 
-#include "libCellmlBase.idl"
+#include "libcellmlBase.idl"
 #include "DOM_APISPEC.idl"
 #include "MathML_content_APISPEC.idl"
 

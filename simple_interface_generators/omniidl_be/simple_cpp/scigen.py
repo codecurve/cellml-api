@@ -42,7 +42,7 @@ class Walker(idlvisitor.AstVisitor):
             self.sci.out('#include "cda_compiler_support.h"')
             self.sci.out('#ifndef _SCI' + self.masterGuard + '_hxx')
             self.sci.out('#define _SCI' + self.masterGuard + '_hxx')
-            self.sci.out('#include "Iface' + node.filebase + '.hxx"')
+            self.sci.out('#include "' + node.filebase + '.hxx"')
             self.sci.out('#include "' + node.filebase + '.hh"')
             self.sci.out('#ifdef MODULE_CONTAINS_' + self.masterGuard)
             self.sci.out('#define PUBLIC_' + self.masterGuard + '_PRE CDA_EXPORT_PRE')
@@ -505,15 +505,15 @@ class Walker(idlvisitor.AstVisitor):
 	    ppre = 'PUBLIC_' + self.masterGuard + '_PRE'
             psemi =  'PUBLIC_' + self.masterGuard + '_POST;'
             pfq = ''
-        self.sci.out(ppre + '::iface::' + node.corbacxxscoped + '* ' + pfq +\
+        self.sci.out(ppre + '::' + node.corbacxxscoped + '* ' + pfq +\
                      unwrapName + '()' + psemi)
         if self.doing_header:
-            self.sci.out('virtual ::iface::' + node.corbacxxscoped + '* ' +\
+            self.sci.out('virtual ::' + node.corbacxxscoped + '* ' +\
                          downcastName + '() = 0;')
         else:
             self.sci.out('{')
             self.sci.inc_indent()
-            self.sci.out('::iface::' + node.corbacxxscoped + '* tmp = ' +\
+            self.sci.out('::' + node.corbacxxscoped + '* tmp = ' +\
                          downcastName + '();')
             self.sci.out('if (tmp)')
             self.sci.out('  tmp->add_ref();')
@@ -632,12 +632,12 @@ class Walker(idlvisitor.AstVisitor):
             self.sci.out('{')
             self.sci.out('private:')
             self.sci.inc_indent()
-            self.sci.out('::iface::' + node.corbacxxscoped + '* _obj;')
+            self.sci.out('::' + node.corbacxxscoped + '* _obj;')
             self.sci.dec_indent()
             self.sci.out('public:')
             self.sci.inc_indent()
             self.sci.out('PUBLIC_' + self.masterGuard + '_PRE _final_' +\
-			 node.simplename + '(::iface::' + node.corbacxxscoped +\
+			 node.simplename + '(::' + node.corbacxxscoped +\
 			 '* _aobj, ' + '::PortableServer::POA_ptr aPp) PUBLIC_' +\
 			 self.masterGuard + '_POST;')
             self.sci.out('virtual ~_final_' + node.simplename + '()')
@@ -670,7 +670,7 @@ class Walker(idlvisitor.AstVisitor):
             self.sci.out('uint32_t _corbarefcount;')
         else:
             self.sci.out('SCI::' + node.finalcciscoped + '::_final_' +\
-                         node.simplename + '(::iface::' +\
+                         node.simplename + '(::' +\
                          node.corbacxxscoped + '* _aobj, ' +\
                          '::PortableServer::POA_ptr aPp)')
             self.sci.out(' : _corbarefcount(0)')
@@ -717,8 +717,8 @@ class Walker(idlvisitor.AstVisitor):
             self.sci.out('{')
             self.sci.inc_indent()
             # Note: gcc doesn't like dynamic_cast<::*>.
-            self.sci.out('::iface::' + node.corbacxxscoped + '* obj = ' +\
-                         'reinterpret_cast< ::iface::' + node.corbacxxscoped +\
+            self.sci.out('::' + node.corbacxxscoped + '* obj = ' +\
+                         'reinterpret_cast< ::' + node.corbacxxscoped +\
                          '* >(aObj);')
             self.sci.out('if (obj == NULL) return ::' + node.corbacxxscoped +\
                          '::_nil();')
@@ -758,7 +758,7 @@ class Walker(idlvisitor.AstVisitor):
             pfq = ''
         
         downcastName = '_downcast_' + string.join(base.scopedName(), '_')
-        self.sci.out('::iface::' + base.corbacxxscoped + '* ' + pfq +\
+        self.sci.out('::' + base.corbacxxscoped + '* ' + pfq +\
                      downcastName + '()' + psemi)
         if not self.doing_header:
             self.sci.out('{')

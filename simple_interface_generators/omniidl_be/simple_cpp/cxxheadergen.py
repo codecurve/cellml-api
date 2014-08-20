@@ -23,8 +23,8 @@ class Walker(idlvisitor.AstVisitor):
         for i in node.filebase:
             if (i >= 'a' and i <= 'z') or (i >= 'A' and i <= 'Z'):
                 self.masterGuard = self.masterGuard + i
-        self.cxxheader.out("#ifndef _GUARD_IFACE_" + self.masterGuard)
-        self.cxxheader.out("#define _GUARD_IFACE_" + self.masterGuard)
+        self.cxxheader.out("#ifndef _GUARD_" + self.masterGuard)
+        self.cxxheader.out("#define _GUARD_" + self.masterGuard)
         self.cxxheader.out('#include "cda_compiler_support.h"')
         self.scope = []
         self.scopeEntryDepth = 0
@@ -65,7 +65,7 @@ class Walker(idlvisitor.AstVisitor):
         self.beenIncluded[name] = 1;
         self.escapeScopes()
         basename,ext = os.path.splitext(name)
-        self.cxxheader.out('#include "Iface' + basename  + '.hxx"')
+        self.cxxheader.out('#include "' + basename  + '.hxx"')
         self.cxxheader.inModule = 0
         
     def visitModule(self, node):
@@ -277,5 +277,5 @@ class Walker(idlvisitor.AstVisitor):
     
 def run(tree):
     w = Walker()
-    w.cxxheader = output.Stream(open("Iface" + tree.filebase + ".hxx", "w"), 2);
+    w.cxxheader = output.Stream(open(tree.filebase + ".hxx", "w"), 2);
     tree.accept(w)

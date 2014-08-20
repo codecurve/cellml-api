@@ -45,7 +45,7 @@ class Walker(idlvisitor.AstVisitor):
             self.cci.out('#ifndef _CCI' + self.masterGuard + '_hxx')
             self.cci.out('#define _CCI' + self.masterGuard + '_hxx')
             self.cci.out('')
-            self.cci.out('#include "Iface' + node.filebase + '.hxx"')
+            self.cci.out('#include "' + node.filebase + '.hxx"')
             self.cci.out('#include "' + node.filebase + '.hh"')
             self.cci.out('#ifdef MODULE_CONTAINS_' + self.masterGuard)
             self.cci.out('#define PUBLIC_' + self.masterGuard + '_PRE CDA_EXPORT_PRE')
