@@ -38,7 +38,7 @@ def AnnotateByRepoID(node, skiplastscope=0):
     node.finalcciscoped = string.join(sn[:-1], '::') + '::_final_' + sn[-1]
     node.factoryscoped = string.join(sn[:-1], '::') + '::_factory_' + sn[-1]
     node.poacxxscoped = 'POA_' + node.corbacxxscoped
-    node.simplecxxscoped = 'iface::' + node.corbacxxscoped
+    node.simplecxxscoped = node.corbacxxscoped
     node.lengthprefixed = ''
     for part in sn:
         node.lengthprefixed = node.lengthprefixed + ('%d%s' % (len(part), part))
