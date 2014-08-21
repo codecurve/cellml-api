@@ -887,17 +887,6 @@ namespace libcellml
   
 
   /**
-     * An enumeration representing the direction of the variable interface.
-     */
-  typedef enum _enum_VariableInterface
-  {
-    INTERFACE_IN = 0,
-    INTERFACE_OUT = 1,
-    INTERFACE_NONE = 2
-  } VariableInterface;
-  
-
-  /**
      * Represents a &lt;variable> element in a CellML document.
      */
   class CellMLVariable
@@ -923,12 +912,12 @@ namespace libcellml
     virtual void initialValueValue(double attr) throw(std::exception&) = 0;
     
 
-    virtual libcellml::VariableInterface privateInterface() throw(std::exception&)  = 0;
-    virtual void privateInterface(libcellml::VariableInterface attr) throw(std::exception&) = 0;
+    virtual bool privateInterface() throw(std::exception&)  = 0;
+    virtual void privateInterface(bool attr) throw(std::exception&) = 0;
     
 
-    virtual libcellml::VariableInterface publicInterface() throw(std::exception&)  = 0;
-    virtual void publicInterface(libcellml::VariableInterface attr) throw(std::exception&) = 0;
+    virtual bool publicInterface() throw(std::exception&)  = 0;
+    virtual void publicInterface(bool attr) throw(std::exception&) = 0;
     
 
     virtual std::shared_ptr<libcellml::CellMLVariableSet>  connectedVariables() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;

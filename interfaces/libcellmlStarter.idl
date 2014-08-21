@@ -897,25 +897,6 @@ module libcellml
 #pragma terminal-interface
 
   /**
-   * An enumeration representing the direction of the variable interface.
-   */
-  enum VariableInterface
-  {
-    /**
-     * The interface is in.
-     */
-    INTERFACE_IN,
-    /**
-     * The interface is out.
-     */
-    INTERFACE_OUT,
-    /**
-     * No interface is defined.
-     */
-    INTERFACE_NONE
-  };
-
-  /**
    * Represents a &lt;variable> element in a CellML document.
    */
   interface CellMLVariable
@@ -953,14 +934,14 @@ module libcellml
     attribute double initialValueValue;
 
     /**
-     * The private interface direction of this variable.
+     * True if the variable has private interface set to "yes", otherwise false.
      */
-    attribute VariableInterface privateInterface;
+    attribute boolean privateInterface;
 
     /**
-     * The public interface direction of this variable.
+     * True if the variable has public interface set to "yes", otherwise false.
      */
-    attribute VariableInterface publicInterface;
+    attribute boolean publicInterface;
 
     /**
      * The collection of all variables connected to this variable.
