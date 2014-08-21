@@ -949,16 +949,12 @@ module libcellml
     readonly attribute CellMLVariableSet connectedVariables;
 
     /**
-     * The source variable is always a variable on which f(v) holds, and is
-     * this variable, or a variable which is(directly or indirectly) connected
-     * to this variable. If no such variable exists, sourceVariable is nil.
+     * The source variable is an arbitrarily selected variable 
+     * which is (directly or indirectly) connected
+     * to this variable. 
+     * If no other variables are connected, then this is nil.
      * This must work correctly across import boundaries, if those imports
      * have been fully instantiated.
-     * f(v) is defined as meaning
-     *   (v.public_interface == INTERFACE_OUT ||
-     *    v.public_interface == INTERFACE_NONE) &&
-     *   (v.private_interface == INTERFACE_OUT ||
-     *    v.private_interface == INTERFACE_NONE)
      * 
      */
     readonly attribute CellMLVariable sourceVariable;
