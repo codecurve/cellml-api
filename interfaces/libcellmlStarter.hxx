@@ -1086,50 +1086,6 @@ namespace libcellml
   class VariableRef;
   
 
-  class Role;
-  
-
-  /**
-     * An interface to a &lt;reaction> element.
-     */
-  class Reaction
-   : public virtual libcellml::CellMLElement
-  {
-  public:
-    static const char* INTERFACE_NAME() { return "libcellml::Reaction"; }
-    virtual ~Reaction() {}
-    
-
-    virtual std::shared_ptr<libcellml::VariableRefSet>  variableReferences() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    
-
-    virtual bool reversible() throw(std::exception&)  = 0;
-    virtual void reversible(bool attr) throw(std::exception&) = 0;
-    
-
-    /**
-         * Fetches a VariableRef by the variable name.
-         * @param varName The name of the variable, within this component.
-         * @param create Whether or not to create a VariableRef if not found.
-         * @return The variable reference corresponding to this variable.
-         *   If no such VariableRef exists, then:
-         *     i) If create is true, a new one is created and added to this
-         *        reaction.
-         *    ii) If create is false, NULL is returned.
-         */
-    virtual std::shared_ptr<libcellml::VariableRef>  getVariableRef(const std::wstring& varName, bool create) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
-    
-
-    /**
-         * Fetches a Role by the delta variable name.
-         * @param varName The name of the delta variable, within this component.
-         * @return The Role corresponding to this delta variable.
-         * If no such Role exists, then NULL is returned.
-         */
-    virtual std::shared_ptr<libcellml::Role>  getRoleByDeltaVariable(const std::wstring& varName) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
-  };
-  
-
   /**
      * An interface to the &lt;variable_ref> element.
      */
@@ -1147,58 +1103,6 @@ namespace libcellml
 
     virtual std::wstring variableName() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     virtual void variableName(const std::wstring& attr) throw(std::exception&) = 0;
-  };
-  
-
-  /**
-     * An interface to the &lt;role> element.
-     */
-  class Role
-   : public virtual libcellml::CellMLElement , public virtual libcellml::MathContainer
-  {
-  public:
-    static const char* INTERFACE_NAME() { return "libcellml::Role"; }
-    virtual ~Role() {}
-    
-
-    typedef enum _enum_RoleType
-    {
-      REACTANT = 0,
-      PRODUCT = 1,
-      RATE = 2,
-      CATALYST = 3,
-      ACTIVATOR = 4,
-      INHIBITOR = 5,
-      MODIFIER = 6
-    } RoleType;
-    
-
-    typedef enum _enum_DirectionType
-    {
-      FORWARD = 0,
-      REVERSE = 1,
-      BOTH = 2
-    } DirectionType;
-    
-
-    virtual libcellml::Role::RoleType variableRole() throw(std::exception&)  = 0;
-    virtual void variableRole(libcellml::Role::RoleType attr) throw(std::exception&) = 0;
-    
-
-    virtual libcellml::Role::DirectionType direction() throw(std::exception&)  = 0;
-    virtual void direction(libcellml::Role::DirectionType attr) throw(std::exception&) = 0;
-    
-
-    virtual double stoichiometry() throw(std::exception&)  = 0;
-    virtual void stoichiometry(double attr) throw(std::exception&) = 0;
-    
-
-    virtual std::shared_ptr<libcellml::CellMLVariable>  deltaVariable() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void deltaVariable(libcellml::CellMLVariable* attr) throw(std::exception&) = 0;
-    
-
-    virtual std::wstring deltaVariableName() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void deltaVariableName(const std::wstring& attr) throw(std::exception&) = 0;
   };
   
 
@@ -1880,45 +1784,6 @@ namespace libcellml
   
 
   /**
-     * An interface allowing Reaction elements to be iterated.
-     */
-  class ReactionIterator
-   : public virtual libcellml::CellMLElementIterator
-  {
-  public:
-    static const char* INTERFACE_NAME() { return "libcellml::ReactionIterator"; }
-    virtual ~ReactionIterator() {}
-    
-
-    /**
-         * Fetches the next Reaction, and advances the iterator.
-         * @return The next Reaction, or nil if there are no more Reaction
-         *         elements.
-         */
-    virtual std::shared_ptr<libcellml::Reaction>  nextReaction() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
-  };
-  
-
-  /**
-     * An interface for accessing a set of Reaction elements.
-     */
-  class ReactionSet
-   : public virtual libcellml::CellMLElementSet
-  {
-  public:
-    static const char* INTERFACE_NAME() { return "libcellml::ReactionSet"; }
-    virtual ~ReactionSet() {}
-    
-
-    /**
-         * Returns a ReactionIterator that can be used to iterate through the
-         * Reaction elements. The iteration order is undefined.
-         */
-    virtual std::shared_ptr<libcellml::ReactionIterator>  iterateReactions() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
-  };
-  
-
-  /**
      * An interface allowing VariableRef elements to be iterated.
      */
   class VariableRefIterator
@@ -1954,45 +1819,6 @@ namespace libcellml
          * VariableRef elements. The iteration order is undefined.
          */
     virtual std::shared_ptr<libcellml::VariableRefIterator>  iterateVariableRefs() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
-  };
-  
-
-  /**
-     * An interface allowing Role elements to be iterated.
-     */
-  class RoleIterator
-   : public virtual libcellml::CellMLElementIterator
-  {
-  public:
-    static const char* INTERFACE_NAME() { return "libcellml::RoleIterator"; }
-    virtual ~RoleIterator() {}
-    
-
-    /**
-         * Fetches the next Role, and advances the iterator.
-         * @return The next Role, or nil if there are no more Role
-         *         elements.
-         */
-    virtual std::shared_ptr<libcellml::Role>  nextRole() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
-  };
-  
-
-  /**
-     * An interface for accessing a set of Role elements.
-     */
-  class RoleSet
-   : public virtual libcellml::CellMLElementSet
-  {
-  public:
-    static const char* INTERFACE_NAME() { return "libcellml::RoleSet"; }
-    virtual ~RoleSet() {}
-    
-
-    /**
-         * Returns a RoleIterator that can be used to iterate through the Role
-         * elements. The iteration order is undefined.
-         */
-    virtual std::shared_ptr<libcellml::RoleIterator>  iterateRoles() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
   };
   
 

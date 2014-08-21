@@ -1173,46 +1173,6 @@ module libcellml
 #pragma terminal-interface
 
   interface VariableRef;
-  interface Role;
-
-  /**
-   * An interface to a &lt;reaction> element.
-   */
-  interface Reaction
-    : CellMLElement
-  {
-    /**
-     * A collection of all the reactants involved in this reaction.
-     */
-    readonly attribute VariableRefSet variableReferences;
-
-    /**
-     * Whether or not the reaction is reversible. May be yes, no,
-     * or the empty string(if the attribute is absent).
-     */
-    attribute boolean reversible;
-
-    /**
-     * Fetches a VariableRef by the variable name.
-     * @@param varName The name of the variable, within this component.
-     * @@param create Whether or not to create a VariableRef if not found.
-     * @@return The variable reference corresponding to this variable.
-     *   If no such VariableRef exists, then:
-     *     i) If create is true, a new one is created and added to this
-     *        reaction.
-     *    ii) If create is false, NULL is returned.
-     */
-    VariableRef getVariableRef(in wstring varName, in boolean create);
-
-    /**
-     * Fetches a Role by the delta variable name.
-     * @@param varName The name of the delta variable, within this component.
-     * @@return The Role corresponding to this delta variable.
-     * If no such Role exists, then NULL is returned.
-     */
-    Role getRoleByDeltaVariable(in wstring varName);
-  };
-#pragma terminal-interface
 
   /**
    * An interface to the &lt;variable_ref> element.
@@ -1230,49 +1190,6 @@ module libcellml
      * The name of the variable being referenced.
      */
     attribute wstring variableName;
-  };
-#pragma terminal-interface
-
-  /**
-   * An interface to the &lt;role> element.
-   */
-  interface Role
-    : CellMLElement, MathContainer
-  {
-    enum RoleType
-    {
-      REACTANT, PRODUCT, RATE, CATALYST, ACTIVATOR, INHIBITOR, MODIFIER
-    };
-
-    enum DirectionType
-    {
-      FORWARD, REVERSE, BOTH
-    };
-
-    /**
-     * The role this variable plays.
-     */
-    attribute RoleType variableRole;
-    
-    /**
-     * The direction of the reaction for which this role applies.
-     */
-    attribute DirectionType direction;
-
-    /**
-     * The stoichiometry for this role.
-     */
-    attribute double stoichiometry;
-
-    /**
-     * The variable represented by the delta_variable attribute.
-     */
-    attribute CellMLVariable deltaVariable;
-
-    /**
-     * The name of the variable represented by the delta_variable attribute.
-     */
-    attribute wstring deltaVariableName;
   };
 #pragma terminal-interface
 
@@ -1780,34 +1697,6 @@ module libcellml
   };
 #pragma terminal-interface
 
-  /**
-   * An interface allowing Reaction elements to be iterated.
-   */
-  interface ReactionIterator
-    : CellMLElementIterator
-  {
-    /**
-     * Fetches the next Reaction, and advances the iterator.
-     * @@return The next Reaction, or nil if there are no more Reaction
-     *         elements.
-     */
-    Reaction nextReaction();
-  };
-#pragma terminal-interface
-
-  /**
-   * An interface for accessing a set of Reaction elements.
-   */
-  interface ReactionSet
-    : CellMLElementSet
-  {
-    /**
-     * Returns a ReactionIterator that can be used to iterate through the
-     * Reaction elements. The iteration order is undefined.
-     */
-    ReactionIterator iterateReactions();
-  };
-#pragma terminal-interface
 
   /**
    * An interface allowing VariableRef elements to be iterated.
@@ -1837,33 +1726,6 @@ module libcellml
   };
 #pragma terminal-interface
 
-  /**
-   * An interface allowing Role elements to be iterated.
-   */
-  interface RoleIterator : CellMLElementIterator
-  {
-    /**
-     * Fetches the next Role, and advances the iterator.
-     * @@return The next Role, or nil if there are no more Role
-     *         elements.
-     */
-    Role nextRole();
-  };
-#pragma terminal-interface
-
-  /**
-   * An interface for accessing a set of Role elements.
-   */
-  interface RoleSet
-    : CellMLElementSet
-  {
-    /**
-     * Returns a RoleIterator that can be used to iterate through the Role
-     * elements. The iteration order is undefined.
-     */
-    RoleIterator iterateRoles();
-  };
-#pragma terminal-interface
 
   /**
    * An interface allowing notifications that model loading has completed to
