@@ -109,12 +109,19 @@ class Walker(idlvisitor.AstVisitor):
         # Write a pure virtual destructor...
         self.cxxheader.out('static const char* INTERFACE_NAME() { return "' + node.corbacxxscoped + '"; }')
         self.cxxheader.out('virtual ~' + node.simplename + '() {}')
-        for n in node.contents():
+        for n in node.callables():
             self.cxxheader.out("\n")
-            if isinstance(n, idlast.Decl) :
-                cs = n.comments()
-                for c in cs :
-                    self.cxxheader.out(c.text())
+                #                if isinstance(n, idlast.Decl) :
+            cs = n.comments()
+            for c in cs :
+                self.cxxheader.out(c.text())
+
+        for n in node.contents():
+            #            self.cxxheader.out("\n")
+            #            if isinstance(n, idlast.Decl) :
+            #                cs = n.comments()
+            #                for c in cs :
+            #                    self.cxxheader.out(c.text())
             n.accept(self)
         self.cxxheader.dec_indent()
         self.cxxheader.out('};')
@@ -243,12 +250,12 @@ class Walker(idlvisitor.AstVisitor):
         for n in node.declarators():
             self.cxxheader.out('virtual ' + typename + ' ' + n.simplename +
                                '(' +
-                               ') throw(std::exception&) ' +
+                               ')' +
                                possibleWarnUnused + ' = 0;')
             if not node.readonly():
                 self.cxxheader.out('virtual void ' + n.simplename + '(' + typenameC +
                                    ' attr' +
-                                   ') throw(std::exception&) = 0;')
+                                   ');')
     
     def visitOperation(self, node):
         rtype = simplecxx.typeToSimpleCXX(node.returnType(), is_ret=1)
@@ -269,9 +276,7 @@ class Walker(idlvisitor.AstVisitor):
                                                     not n.is_out()) +\
                    ' ' + n.simplename
         
-        # Every operation can throw, e.g. in an I/O error, not just those that
-        # list exceptions with raises.
-        call = call + ') throw(std::exception&)' +\
+        call = call + ')' +\
                simplecxx.shouldWarnIfUnused(node.returnType()) + ' = 0;'
         self.cxxheader.out(call)
     

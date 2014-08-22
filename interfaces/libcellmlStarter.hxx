@@ -118,7 +118,7 @@ namespace libcellml
     virtual ~RDFRepresentation() {}
     
 
-    virtual std::wstring type() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
+    virtual std::wstring type() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -133,8 +133,8 @@ namespace libcellml
     virtual ~RDFXMLDOMRepresentation() {}
     
 
-    virtual std::shared_ptr<dom::Document>  data() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void data(dom::Document* attr) throw(std::exception&) = 0;
+    virtual std::shared_ptr<dom::Document>  data() WARN_IF_RETURN_UNUSED = 0;
+    virtual void data(dom::Document* attr);
   };
   
 
@@ -149,8 +149,8 @@ namespace libcellml
     virtual ~RDFXMLStringRepresentation() {}
     
 
-    virtual std::wstring serialisedData() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void serialisedData(const std::wstring& attr) throw(std::exception&) = 0;
+    virtual std::wstring serialisedData() WARN_IF_RETURN_UNUSED = 0;
+    virtual void serialisedData(const std::wstring& attr);
   };
   
 
@@ -184,7 +184,7 @@ namespace libcellml
          * @param wasStale If an xlink:href was changed while the corresponding
          *                 import was loading.
          */
-    virtual void loadCompleted(bool wasStale) throw(std::exception&) = 0;
+    virtual void loadCompleted(bool wasStale) = 0;
   };
   
 
@@ -213,8 +213,8 @@ namespace libcellml
     virtual ~URI() {}
     
 
-    virtual std::wstring asText() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void asText(const std::wstring& attr) throw(std::exception&) = 0;
+    virtual std::wstring asText() WARN_IF_RETURN_UNUSED = 0;
+    virtual void asText(const std::wstring& attr);
   };
   
 
@@ -228,14 +228,10 @@ namespace libcellml
     virtual ~CellMLElement() {}
     
 
-    virtual std::wstring cellmlVersion() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::wstring cmetaId() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void cmetaId(const std::wstring& attr) throw(std::exception&) = 0;
     
 
-    virtual std::shared_ptr<libcellml::ExtensionElementList>  extensionElements() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -245,21 +241,18 @@ namespace libcellml
          *               nil, then the insertion will be at the start of the list.
          * @param newEl The new element to insert.
          */
-    virtual void insertExtensionElementAfter(dom::Element* marker, dom::Element* newEl) throw(std::exception&) = 0;
     
 
     /**
          * Equivalent to insertExtensionElementAfter(last extension element, x).
          * @param x The element to append.
          */
-    virtual void appendExtensionElement(dom::Element* x) throw(std::exception&) = 0;
     
 
     /**
          * Equivalent to insertExtensionElementAfter(nil, x)
          * @param x The element to prepend.
          */
-    virtual void prependExtensionElement(dom::Element* x) throw(std::exception&) = 0;
     
 
     /**
@@ -267,7 +260,6 @@ namespace libcellml
          * do nothing.
          * @param x The element to remove.
          */
-    virtual void removeExtensionElement(dom::Element* x) throw(std::exception&) = 0;
     
 
     /**
@@ -276,16 +268,13 @@ namespace libcellml
          * @param x The element to find.
          * @param y The element to replace x with.
          */
-    virtual void replaceExtensionElement(dom::Element* x, dom::Element* y) throw(std::exception&) = 0;
     
 
     /**
          * Remove all extension elements from this element.
          */
-    virtual void clearExtensionElements() throw(std::exception&) = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLElementSet>  childElements() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -297,14 +286,12 @@ namespace libcellml
          * @param x The CellMLElement to add.
          * @exception CellMLException if the element cannot be added to this Element.
          */
-    virtual void addElement(libcellml::CellMLElement* x) throw(std::exception&) = 0;
     
 
     /**
          * Removes a CellML element from this element.
          * @param x The CellMLElement to remove.
          */
-    virtual void removeElement(libcellml::CellMLElement* x) throw(std::exception&) = 0;
     
 
     /**
@@ -315,7 +302,6 @@ namespace libcellml
          * @param x The CellMLElement to remove.
          * @param y The CellMLElement to add.
          */
-    virtual void replaceElement(libcellml::CellMLElement* x, libcellml::CellMLElement* y) throw(std::exception&) = 0;
     
 
     /**
@@ -324,13 +310,10 @@ namespace libcellml
          * @param type The type of element("variable", "component", etc...)
          * @param name The name to remove.
          */
-    virtual void removeByName(const std::wstring& type, const std::wstring& name) throw(std::exception&) = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLElement>  parentElement() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::Model>  modelElement() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -348,7 +331,6 @@ namespace libcellml
          * @param key  A string to identify the annotation.
          * @param data The data to set, or nil to clear the UserData for a key.
          */
-    virtual void setUserData(const std::wstring& key, libcellml::UserData* data) throw(std::exception&) = 0;
     
 
     /**
@@ -357,7 +339,6 @@ namespace libcellml
          * @return The user-data associated with the key.
          * @exception CellMLException if no UserData is set for the given key.
          */
-    virtual std::shared_ptr<libcellml::UserData>  getUserData(const std::wstring& key) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -367,7 +348,6 @@ namespace libcellml
          * @param defval A default value to return if the key isn't found.
          * @return The user-data associated with the key or the default value.
          */
-    virtual std::shared_ptr<libcellml::UserData>  getUserDataWithDefault(const std::wstring& key, libcellml::UserData* defval) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -377,7 +357,6 @@ namespace libcellml
          *             If true, clones the element, and its children, which are added
          *               into the new element.
          */
-    virtual std::shared_ptr<libcellml::CellMLElement>  clone(bool deep) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -385,7 +364,6 @@ namespace libcellml
          * @param ns The namespace of the extension attribute to fetch.
          * @param localName The local name of the attribute to fetch.
          */
-    virtual std::wstring getExtensionAttributeNS(const std::wstring& ns, const std::wstring& localName) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -395,7 +373,6 @@ namespace libcellml
          * @param qualifiedName The qualified name of the attribute to set.
          * @param value The value to set the attribute to.
          */
-    virtual void setExtensionAttributeNS(const std::wstring& ns, const std::wstring& qualifiedName, const std::wstring& value) throw(std::exception&) = 0;
     
 
     /**
@@ -404,10 +381,33 @@ namespace libcellml
          * @param ns The namespace of the extension attribute to remove.
          * @param localName The local name of the attribute to remove.
          */
-    virtual void removeExtensionAttributeNS(const std::wstring& ns, const std::wstring& localName) throw(std::exception&) = 0;
     
 
-    virtual std::shared_ptr<libcellml::ExtensionAttributeSet>  extensionAttributes() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
+    virtual std::wstring cellmlVersion() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::wstring cmetaId() WARN_IF_RETURN_UNUSED = 0;
+    virtual void cmetaId(const std::wstring& attr);
+    virtual std::shared_ptr<libcellml::ExtensionElementList>  extensionElements() WARN_IF_RETURN_UNUSED = 0;
+    virtual void insertExtensionElementAfter(dom::Element* marker, dom::Element* newEl) = 0;
+    virtual void appendExtensionElement(dom::Element* x) = 0;
+    virtual void prependExtensionElement(dom::Element* x) = 0;
+    virtual void removeExtensionElement(dom::Element* x) = 0;
+    virtual void replaceExtensionElement(dom::Element* x, dom::Element* y) = 0;
+    virtual void clearExtensionElements() = 0;
+    virtual std::shared_ptr<libcellml::CellMLElementSet>  childElements() WARN_IF_RETURN_UNUSED = 0;
+    virtual void addElement(libcellml::CellMLElement* x) = 0;
+    virtual void removeElement(libcellml::CellMLElement* x) = 0;
+    virtual void replaceElement(libcellml::CellMLElement* x, libcellml::CellMLElement* y) = 0;
+    virtual void removeByName(const std::wstring& type, const std::wstring& name) = 0;
+    virtual std::shared_ptr<libcellml::CellMLElement>  parentElement() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Model>  modelElement() WARN_IF_RETURN_UNUSED = 0;
+    virtual void setUserData(const std::wstring& key, libcellml::UserData* data) = 0;
+    virtual std::shared_ptr<libcellml::UserData>  getUserData(const std::wstring& key) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::UserData>  getUserDataWithDefault(const std::wstring& key, libcellml::UserData* defval) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLElement>  clone(bool deep) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::wstring getExtensionAttributeNS(const std::wstring& ns, const std::wstring& localName) WARN_IF_RETURN_UNUSED = 0;
+    virtual void setExtensionAttributeNS(const std::wstring& ns, const std::wstring& qualifiedName, const std::wstring& value) = 0;
+    virtual void removeExtensionAttributeNS(const std::wstring& ns, const std::wstring& localName) = 0;
+    virtual std::shared_ptr<libcellml::ExtensionAttributeSet>  extensionAttributes() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -425,7 +425,6 @@ namespace libcellml
     virtual ~CellMLDOMElement() {}
     
 
-    virtual std::shared_ptr<dom::Element>  domElement() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -434,7 +433,8 @@ namespace libcellml
          * @param x The DOM element to look up.
          * @return The corresponding CellML element, or null.
          */
-    virtual std::shared_ptr<libcellml::CellMLElement>  findCellMLElementFromDOMElement(dom::Element* x) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<dom::Element>  domElement() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLElement>  findCellMLElementFromDOMElement(dom::Element* x) WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -450,8 +450,8 @@ namespace libcellml
     virtual ~NamedCellMLElement() {}
     
 
-    virtual std::wstring name() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void name(const std::wstring& attr) throw(std::exception&) = 0;
+    virtual std::wstring name() WARN_IF_RETURN_UNUSED = 0;
+    virtual void name(const std::wstring& attr);
   };
   
 
@@ -477,47 +477,32 @@ namespace libcellml
          *                      or 1.1
          * @exception CellMLException if the version is not supported by the API.
          */
-    virtual std::shared_ptr<libcellml::Model>  getAlternateVersion(const std::wstring& cellmlVersion) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
-    typedef std::vector<std::shared_ptr<libcellml::Encapsulation> >& EncapsulationsT;
     
 
-    virtual std::vector<std::shared_ptr<libcellml::Encapsulation> > encapsulations() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLImportSet>  imports() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::URI>  base_uri() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::UnitsSet>  localUnits() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::UnitsSet>  modelUnits() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::UnitsSet>  allUnits() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLComponentSet>  localComponents() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLComponentSet>  modelComponents() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLComponentSet>  allComponents() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    
-
-    virtual std::shared_ptr<libcellml::ConnectionSet>  connections() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * This fully instantiates the import definitions. It will then recursively
          * instantiate all imports in the imported models.
          */
-    virtual void fullyInstantiateImports() throw(std::exception&) = 0;
     
 
     /**
@@ -526,86 +511,72 @@ namespace libcellml
          * imported models.
          * @param listener A listener which will be notified when imports are instantiated.
          */
-    virtual void asyncFullyInstantiateImports(libcellml::ImportInstantiationListener* listener) throw(std::exception&) = 0;
     
 
     /**
          * Creates a new (local) CellMLComponent.
          */
-    virtual std::shared_ptr<libcellml::CellMLComponent>  createComponent() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Creates a new ImportComponent.
          */
-    virtual std::shared_ptr<libcellml::ImportComponent>  createImportComponent() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Creates a new (local) Units.
          */
-    virtual std::shared_ptr<libcellml::Units>  createUnits() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Creates a new ImportUnits.
          */
-    virtual std::shared_ptr<libcellml::ImportUnits>  createImportUnits() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Creates a new Unit.
          */
-    virtual std::shared_ptr<libcellml::Unit>  createUnit() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Creates a new CellMLImport.
          */
-    virtual std::shared_ptr<libcellml::CellMLImport>  createCellMLImport() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Creates a new CellMLVariable.
          */
-    virtual std::shared_ptr<libcellml::CellMLVariable>  createCellMLVariable() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Creates a new ComponentRef.
          */
-    virtual std::shared_ptr<libcellml::ComponentRef>  createComponentRef() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Creates a new Encapsulation.
          */
-    virtual std::shared_ptr<libcellml::Encapsulation>  createEncapsulation() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Creates a new Connection. This also creates the MapComponents.
          */
-    virtual std::shared_ptr<libcellml::Connection>  createConnection() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Creates a new MapVariables.
          */
-    virtual std::shared_ptr<libcellml::MapVariables>  createMapVariables() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Creates a new VariableRef.
          */
-    virtual std::shared_ptr<libcellml::VariableRef>  createVariableRef() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Creates a new MathMLMathElement.
          * @return The new MathML math element.
          */
-    virtual std::shared_ptr<mathml_dom::MathMLMathElement>  createMathElement() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -613,10 +584,8 @@ namespace libcellml
          * @param namespaceURI The new namespace URI.
          * @param qualifiedName The new (optionally) qualified name.
          */
-    virtual std::shared_ptr<dom::Element>  createExtensionElement(const std::wstring& namespaceURI, const std::wstring& qualifiedName) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::wstring serialisedText() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -633,7 +602,6 @@ namespace libcellml
          *             http://www.cellml.org/RDFXML/string
          *             http://www.cellml.org/RDFXML/DOM
          */
-    virtual std::shared_ptr<libcellml::RDFRepresentation>  getRDFRepresentation(const std::wstring& type) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -641,16 +609,46 @@ namespace libcellml
          * Will cause the model to be fully instantiated.
          * @exception CellMLException if problems occur instantiating imports.
          */
-    virtual std::shared_ptr<libcellml::Model>  cloneAcrossImports() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::URI>  xmlBase() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Removes the xml:base from the model entirely.
          */
-    virtual void clearXMLBase() throw(std::exception&) = 0;
+    virtual std::shared_ptr<libcellml::Model>  getAlternateVersion(const std::wstring& cellmlVersion) WARN_IF_RETURN_UNUSED = 0;
+    typedef std::vector<std::shared_ptr<libcellml::Encapsulation> >& EncapsulationsT;
+    virtual std::vector<std::shared_ptr<libcellml::Encapsulation> > encapsulations() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLImportSet>  imports() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::URI>  base_uri() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::UnitsSet>  localUnits() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::UnitsSet>  modelUnits() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::UnitsSet>  allUnits() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLComponentSet>  localComponents() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLComponentSet>  modelComponents() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLComponentSet>  allComponents() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ConnectionSet>  connections() WARN_IF_RETURN_UNUSED = 0;
+    virtual void fullyInstantiateImports() = 0;
+    virtual void asyncFullyInstantiateImports(libcellml::ImportInstantiationListener* listener) = 0;
+    virtual std::shared_ptr<libcellml::CellMLComponent>  createComponent() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ImportComponent>  createImportComponent() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Units>  createUnits() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ImportUnits>  createImportUnits() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Unit>  createUnit() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLImport>  createCellMLImport() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLVariable>  createCellMLVariable() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ComponentRef>  createComponentRef() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Encapsulation>  createEncapsulation() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Connection>  createConnection() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::MapVariables>  createMapVariables() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::VariableRef>  createVariableRef() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<mathml_dom::MathMLMathElement>  createMathElement() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<dom::Element>  createExtensionElement(const std::wstring& namespaceURI, const std::wstring& qualifiedName) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::wstring serialisedText() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::RDFRepresentation>  getRDFRepresentation(const std::wstring& type) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Model>  cloneAcrossImports() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::URI>  xmlBase() WARN_IF_RETURN_UNUSED = 0;
+    virtual void clearXMLBase() = 0;
   };
   
 
@@ -661,7 +659,6 @@ namespace libcellml
     virtual ~MathContainer() {}
     
 
-    virtual std::shared_ptr<libcellml::MathList>  math() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -669,7 +666,6 @@ namespace libcellml
          * @param x The element to add.
          * @exception CellMLException if the element cannot be added to this MathContainer.
          */
-    virtual void addMath(mathml_dom::MathMLElement* x) throw(std::exception&) = 0;
     
 
     /**
@@ -680,7 +676,6 @@ namespace libcellml
          *                            element from the DOM is not permissible. This exception
          *                            is not raised merely because x is not in the MathContainer.
          */
-    virtual void removeMath(mathml_dom::MathMLElement* x) throw(std::exception&) = 0;
     
 
     /**
@@ -691,13 +686,16 @@ namespace libcellml
          * @exception CellMLException If y is not valid according to the constraints
          *                            on this collection (check optional).
          */
-    virtual void replaceMath(mathml_dom::MathMLElement* x, mathml_dom::MathMLElement* y) throw(std::exception&) = 0;
     
 
     /**
          * Remove all elements in this collection.
          */
-    virtual void clearMath() throw(std::exception&) = 0;
+    virtual std::shared_ptr<libcellml::MathList>  math() WARN_IF_RETURN_UNUSED = 0;
+    virtual void addMath(mathml_dom::MathMLElement* x) = 0;
+    virtual void removeMath(mathml_dom::MathMLElement* x) = 0;
+    virtual void replaceMath(mathml_dom::MathMLElement* x, mathml_dom::MathMLElement* y) = 0;
+    virtual void clearMath() = 0;
   };
   
 
@@ -712,28 +710,28 @@ namespace libcellml
     virtual ~CellMLComponent() {}
     
 
-    virtual std::shared_ptr<libcellml::CellMLVariableSet>  variables() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::UnitsSet>  units() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::ConnectionSet>  connections() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLComponent>  encapsulationParent() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLComponentSet>  encapsulationChildren() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLComponent>  containmentParent() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLComponentSet>  containmentChildren() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual uint32_t importNumber() throw(std::exception&)  = 0;
+    virtual std::shared_ptr<libcellml::CellMLVariableSet>  variables() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::UnitsSet>  units() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ConnectionSet>  connections() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLComponent>  encapsulationParent() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLComponentSet>  encapsulationChildren() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLComponent>  containmentParent() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLComponentSet>  containmentChildren() WARN_IF_RETURN_UNUSED = 0;
+    virtual uint32_t importNumber() = 0;
   };
   
 
@@ -745,11 +743,11 @@ namespace libcellml
     virtual ~Units() {}
     
 
-    virtual bool isBaseUnits() throw(std::exception&)  = 0;
-    virtual void isBaseUnits(bool attr) throw(std::exception&) = 0;
     
 
-    virtual std::shared_ptr<libcellml::UnitSet>  unitCollection() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
+    virtual bool isBaseUnits() = 0;
+    virtual void isBaseUnits(bool attr);
+    virtual std::shared_ptr<libcellml::UnitSet>  unitCollection() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -764,24 +762,24 @@ namespace libcellml
     virtual ~Unit() {}
     
 
-    virtual int32_t prefix() throw(std::exception&)  = 0;
-    virtual void prefix(int32_t attr) throw(std::exception&) = 0;
     
 
-    virtual double multiplier() throw(std::exception&)  = 0;
-    virtual void multiplier(double attr) throw(std::exception&) = 0;
     
 
-    virtual double offset() throw(std::exception&)  = 0;
-    virtual void offset(double attr) throw(std::exception&) = 0;
     
 
-    virtual double exponent() throw(std::exception&)  = 0;
-    virtual void exponent(double attr) throw(std::exception&) = 0;
     
 
-    virtual std::wstring units() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void units(const std::wstring& attr) throw(std::exception&) = 0;
+    virtual int32_t prefix() = 0;
+    virtual void prefix(int32_t attr);
+    virtual double multiplier() = 0;
+    virtual void multiplier(double attr);
+    virtual double offset() = 0;
+    virtual void offset(double attr);
+    virtual double exponent() = 0;
+    virtual void exponent(double attr);
+    virtual std::wstring units() WARN_IF_RETURN_UNUSED = 0;
+    virtual void units(const std::wstring& attr);
   };
   
 
@@ -796,23 +794,18 @@ namespace libcellml
     virtual ~CellMLImport() {}
     
 
-    virtual std::shared_ptr<libcellml::URI>  xlinkHref() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::ImportComponentSet>  components() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::ImportUnitsSet>  units() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::ConnectionSet>  importedConnections() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Causes the model referenced by the href attribute to be loaded using the
          * same model loader used to load this model.
          */
-    virtual void instantiate() throw(std::exception&) = 0;
     
 
     /**
@@ -820,7 +813,6 @@ namespace libcellml
          * loaded using the same model loader used to load this model.
          * @param listener The listener to load the model with.
          */
-    virtual void asyncInstantiate(libcellml::ImportInstantiationListener* listener) throw(std::exception&) = 0;
     
 
     /**
@@ -828,23 +820,29 @@ namespace libcellml
          * @param xmlText The serialised XML document for the import.
          * @exception CellMLException if xmlText is not valid.
          */
-    virtual void instantiateFromText(const std::wstring& xmlText) throw(std::exception&) = 0;
     
 
-    virtual bool wasInstantiated() throw(std::exception&)  = 0;
     
 
-    virtual uint32_t uniqueIdentifier() throw(std::exception&)  = 0;
     
 
-    virtual std::shared_ptr<libcellml::Model>  importedModel() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
          * Causes the model to be uninstantiated, so that it can be re-instantiated
          * in the future.
          */
-    virtual void uninstantiate() throw(std::exception&) = 0;
+    virtual std::shared_ptr<libcellml::URI>  xlinkHref() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ImportComponentSet>  components() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ImportUnitsSet>  units() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ConnectionSet>  importedConnections() WARN_IF_RETURN_UNUSED = 0;
+    virtual void instantiate() = 0;
+    virtual void asyncInstantiate(libcellml::ImportInstantiationListener* listener) = 0;
+    virtual void instantiateFromText(const std::wstring& xmlText) = 0;
+    virtual bool wasInstantiated() = 0;
+    virtual uint32_t uniqueIdentifier() = 0;
+    virtual std::shared_ptr<libcellml::Model>  importedModel() WARN_IF_RETURN_UNUSED = 0;
+    virtual void uninstantiate() = 0;
   };
   
 
@@ -865,8 +863,8 @@ namespace libcellml
     virtual ~ImportComponent() {}
     
 
-    virtual std::wstring componentRef() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void componentRef(const std::wstring& attr) throw(std::exception&) = 0;
+    virtual std::wstring componentRef() WARN_IF_RETURN_UNUSED = 0;
+    virtual void componentRef(const std::wstring& attr);
   };
   
 
@@ -881,8 +879,8 @@ namespace libcellml
     virtual ~ImportUnits() {}
     
 
-    virtual std::wstring unitsRef() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void unitsRef(const std::wstring& attr) throw(std::exception&) = 0;
+    virtual std::wstring unitsRef() WARN_IF_RETURN_UNUSED = 0;
+    virtual void unitsRef(const std::wstring& attr);
   };
   
 
@@ -897,44 +895,44 @@ namespace libcellml
     virtual ~CellMLVariable() {}
     
 
-    virtual std::wstring initialValue() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void initialValue(const std::wstring& attr) throw(std::exception&) = 0;
     
 
-    virtual bool initialValueFromVariable() throw(std::exception&)  = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLVariable>  initialValueVariable() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void initialValueVariable(libcellml::CellMLVariable* attr) throw(std::exception&) = 0;
     
 
-    virtual double initialValueValue() throw(std::exception&)  = 0;
-    virtual void initialValueValue(double attr) throw(std::exception&) = 0;
     
 
-    virtual bool privateInterface() throw(std::exception&)  = 0;
-    virtual void privateInterface(bool attr) throw(std::exception&) = 0;
     
 
-    virtual bool publicInterface() throw(std::exception&)  = 0;
-    virtual void publicInterface(bool attr) throw(std::exception&) = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLVariableSet>  connectedVariables() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLVariable>  sourceVariable() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::wstring componentName() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::wstring unitsName() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void unitsName(const std::wstring& attr) throw(std::exception&) = 0;
     
 
-    virtual std::shared_ptr<libcellml::Units>  unitsElement() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void unitsElement(libcellml::Units* attr) throw(std::exception&) = 0;
+    virtual std::wstring initialValue() WARN_IF_RETURN_UNUSED = 0;
+    virtual void initialValue(const std::wstring& attr);
+    virtual bool initialValueFromVariable() = 0;
+    virtual std::shared_ptr<libcellml::CellMLVariable>  initialValueVariable() WARN_IF_RETURN_UNUSED = 0;
+    virtual void initialValueVariable(libcellml::CellMLVariable* attr);
+    virtual double initialValueValue() = 0;
+    virtual void initialValueValue(double attr);
+    virtual bool privateInterface() = 0;
+    virtual void privateInterface(bool attr);
+    virtual bool publicInterface() = 0;
+    virtual void publicInterface(bool attr);
+    virtual std::shared_ptr<libcellml::CellMLVariableSet>  connectedVariables() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLVariable>  sourceVariable() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::wstring componentName() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::wstring unitsName() WARN_IF_RETURN_UNUSED = 0;
+    virtual void unitsName(const std::wstring& attr);
+    virtual std::shared_ptr<libcellml::Units>  unitsElement() WARN_IF_RETURN_UNUSED = 0;
+    virtual void unitsElement(libcellml::Units* attr);
   };
   
 
@@ -950,20 +948,18 @@ namespace libcellml
     virtual ~ComponentRef() {}
     
 
-    virtual std::wstring componentName() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void componentName(const std::wstring& attr) throw(std::exception&) = 0;
     
 
+    
+
+    
+
+    virtual std::wstring componentName() WARN_IF_RETURN_UNUSED = 0;
+    virtual void componentName(const std::wstring& attr);
     typedef std::vector<std::shared_ptr<libcellml::ComponentRef> >& ComponentRefsT;
-    
-
-    virtual std::vector<std::shared_ptr<libcellml::ComponentRef> > componentRefs() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    
-
-    virtual std::shared_ptr<libcellml::ComponentRef>  parentComponentRef() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    
-
-    virtual std::shared_ptr<libcellml::Encapsulation>  encapsulationParent() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
+    virtual std::vector<std::shared_ptr<libcellml::ComponentRef> > componentRefs() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ComponentRef>  parentComponentRef() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Encapsulation>  encapsulationParent() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -978,14 +974,10 @@ namespace libcellml
     virtual ~RelationshipRef() {}
     
 
-    virtual std::wstring name() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void name(const std::wstring& attr) throw(std::exception&) = 0;
     
 
-    virtual std::wstring relationship() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::wstring relationshipNamespace() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -994,7 +986,11 @@ namespace libcellml
          * @param namespaceURI The URI of the namespace 
          * @param name The name of the relationship.
          */
-    virtual void setRelationshipName(const std::wstring& namespaceURI, const std::wstring& name) throw(std::exception&) = 0;
+    virtual std::wstring name() WARN_IF_RETURN_UNUSED = 0;
+    virtual void name(const std::wstring& attr);
+    virtual std::wstring relationship() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::wstring relationshipNamespace() WARN_IF_RETURN_UNUSED = 0;
+    virtual void setRelationshipName(const std::wstring& namespaceURI, const std::wstring& name) = 0;
   };
   
 
@@ -1009,7 +1005,7 @@ namespace libcellml
     virtual ~Encapsulation() {}
     
 
-    virtual std::shared_ptr<libcellml::ComponentRefSet>  componentRefs() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ComponentRefSet>  componentRefs() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1024,23 +1020,23 @@ namespace libcellml
     virtual ~Connection() {}
     
 
-    virtual std::shared_ptr<libcellml::MapVariablesSet>  variableMappings() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::wstring firstComponentName() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void firstComponentName(const std::wstring& attr) throw(std::exception&) = 0;
     
 
-    virtual std::wstring secondComponentName() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void secondComponentName(const std::wstring& attr) throw(std::exception&) = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLComponent>  firstComponent() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void firstComponent(libcellml::CellMLComponent* attr) throw(std::exception&) = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLComponent>  secondComponent() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void secondComponent(libcellml::CellMLComponent* attr) throw(std::exception&) = 0;
+    virtual std::shared_ptr<libcellml::MapVariablesSet>  variableMappings() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::wstring firstComponentName() WARN_IF_RETURN_UNUSED = 0;
+    virtual void firstComponentName(const std::wstring& attr);
+    virtual std::wstring secondComponentName() WARN_IF_RETURN_UNUSED = 0;
+    virtual void secondComponentName(const std::wstring& attr);
+    virtual std::shared_ptr<libcellml::CellMLComponent>  firstComponent() WARN_IF_RETURN_UNUSED = 0;
+    virtual void firstComponent(libcellml::CellMLComponent* attr);
+    virtual std::shared_ptr<libcellml::CellMLComponent>  secondComponent() WARN_IF_RETURN_UNUSED = 0;
+    virtual void secondComponent(libcellml::CellMLComponent* attr);
   };
   
 
@@ -1055,20 +1051,20 @@ namespace libcellml
     virtual ~MapVariables() {}
     
 
-    virtual std::wstring firstVariableName() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void firstVariableName(const std::wstring& attr) throw(std::exception&) = 0;
     
 
-    virtual std::wstring secondVariableName() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void secondVariableName(const std::wstring& attr) throw(std::exception&) = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLVariable>  firstVariable() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void firstVariable(libcellml::CellMLVariable* attr) throw(std::exception&) = 0;
     
 
-    virtual std::shared_ptr<libcellml::CellMLVariable>  secondVariable() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void secondVariable(libcellml::CellMLVariable* attr) throw(std::exception&) = 0;
+    virtual std::wstring firstVariableName() WARN_IF_RETURN_UNUSED = 0;
+    virtual void firstVariableName(const std::wstring& attr);
+    virtual std::wstring secondVariableName() WARN_IF_RETURN_UNUSED = 0;
+    virtual void secondVariableName(const std::wstring& attr);
+    virtual std::shared_ptr<libcellml::CellMLVariable>  firstVariable() WARN_IF_RETURN_UNUSED = 0;
+    virtual void firstVariable(libcellml::CellMLVariable* attr);
+    virtual std::shared_ptr<libcellml::CellMLVariable>  secondVariable() WARN_IF_RETURN_UNUSED = 0;
+    virtual void secondVariable(libcellml::CellMLVariable* attr);
   };
   
 
@@ -1086,12 +1082,12 @@ namespace libcellml
     virtual ~VariableRef() {}
     
 
-    virtual std::shared_ptr<libcellml::CellMLVariable>  variable() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void variable(libcellml::CellMLVariable* attr) throw(std::exception&) = 0;
     
 
-    virtual std::wstring variableName() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
-    virtual void variableName(const std::wstring& attr) throw(std::exception&) = 0;
+    virtual std::shared_ptr<libcellml::CellMLVariable>  variable() WARN_IF_RETURN_UNUSED = 0;
+    virtual void variable(libcellml::CellMLVariable* attr);
+    virtual std::wstring variableName() WARN_IF_RETURN_UNUSED = 0;
+    virtual void variableName(const std::wstring& attr);
   };
   
 
@@ -1110,7 +1106,7 @@ namespace libcellml
          * @return The next CellML element, or nil if there are no more CellML
          *         elements.
          */
-    virtual std::shared_ptr<libcellml::CellMLElement>  next() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLElement>  next() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1129,7 +1125,7 @@ namespace libcellml
          * @return The next MathML element, or nil if there are no more MathML
          *         elements.
          */
-    virtual std::shared_ptr<mathml_dom::MathMLElement>  next() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<mathml_dom::MathMLElement>  next() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1143,7 +1139,6 @@ namespace libcellml
     virtual ~ExtensionElementList() {}
     
 
-    virtual uint32_t length() throw(std::exception&)  = 0;
     
 
     /**
@@ -1151,7 +1146,6 @@ namespace libcellml
          * @param x The element to test for.
          * @return true if the element is present, or false otherwise.
          */
-    virtual bool contains(dom::Element* x) throw(std::exception&) = 0;
     
 
     /**
@@ -1160,14 +1154,16 @@ namespace libcellml
          * @return The index(first is 0) of the extension element, or -1 if the
          *         element is not found.
          */
-    virtual int32_t getIndexOf(dom::Element* x) throw(std::exception&) = 0;
     
 
     /**
          * Fetches the extension element at a certain index(starting from 0).
          * @param index The index at which to fetch the extension element.
          */
-    virtual std::shared_ptr<dom::Element>  getAt(uint32_t index) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual uint32_t length() = 0;
+    virtual bool contains(dom::Element* x) = 0;
+    virtual int32_t getIndexOf(dom::Element* x) = 0;
+    virtual std::shared_ptr<dom::Element>  getAt(uint32_t index) WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1181,7 +1177,6 @@ namespace libcellml
     virtual ~MathList() {}
     
 
-    virtual uint32_t length() throw(std::exception&)  = 0;
     
 
     /**
@@ -1189,14 +1184,15 @@ namespace libcellml
          * @param x The element to test for.
          * @return true if the element is present, or false otherwise.
          */
-    virtual bool contains(mathml_dom::MathMLElement* x) throw(std::exception&) = 0;
     
 
     /**
          * Returns a CellMLElementIterator that can be used to iterate through the
          * elements. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::MathMLElementIterator>  iterate() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual uint32_t length() = 0;
+    virtual bool contains(mathml_dom::MathMLElement* x) = 0;
+    virtual std::shared_ptr<libcellml::MathMLElementIterator>  iterate() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1213,7 +1209,7 @@ namespace libcellml
     /**
          * Fetches the next extension attribute node.
          */
-    virtual std::shared_ptr<dom::Attr>  nextAttribute() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<dom::Attr>  nextAttribute() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1231,7 +1227,7 @@ namespace libcellml
          * Returns a CellMLElementIterator that can be used to iterate through the
          * attributes. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::ExtensionAttributeIterator>  iterate() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ExtensionAttributeIterator>  iterate() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1245,7 +1241,6 @@ namespace libcellml
     virtual ~CellMLElementSet() {}
     
 
-    virtual uint32_t length() throw(std::exception&)  = 0;
     
 
     /**
@@ -1253,14 +1248,15 @@ namespace libcellml
          * @param x The element to test for.
          * @return true if the element is present, or false otherwise.
          */
-    virtual bool contains(libcellml::CellMLElement* x) throw(std::exception&) = 0;
     
 
     /**
          * Returns a CellMLElementIterator that can be used to iterate through the
          * elements. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::CellMLElementIterator>  iterate() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual uint32_t length() = 0;
+    virtual bool contains(libcellml::CellMLElement* x) = 0;
+    virtual std::shared_ptr<libcellml::CellMLElementIterator>  iterate() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1282,7 +1278,7 @@ namespace libcellml
          * @param name The name of the element
          * @return The element, or nil if not found.
          */
-    virtual std::shared_ptr<libcellml::NamedCellMLElement>  get(const std::wstring& name) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::NamedCellMLElement>  get(const std::wstring& name) WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1301,7 +1297,7 @@ namespace libcellml
          * Fetches the next Model, and advances the iterator.
          * @return The next Model, or nil if there are no more Model elements.
          */
-    virtual std::shared_ptr<libcellml::Model>  nextModel() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Model>  nextModel() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1320,7 +1316,6 @@ namespace libcellml
          * Returns a ModelIterator that can be used to iterate through the
          * Model elements. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::ModelIterator>  iterateModels() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -1328,7 +1323,8 @@ namespace libcellml
          * @param name The name of the Model
          * @return The Model, or nil if not found.
          */
-    virtual std::shared_ptr<libcellml::Model>  getModel(const std::wstring& name) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ModelIterator>  iterateModels() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Model>  getModel(const std::wstring& name) WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1348,7 +1344,7 @@ namespace libcellml
          * @return The next CellMLComponent, or nil if there are no more
          *         CellMLComponents.
          */
-    virtual std::shared_ptr<libcellml::CellMLComponent>  nextComponent() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLComponent>  nextComponent() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1367,7 +1363,6 @@ namespace libcellml
          * Returns a CellMLComponentIterator that can be used to iterate through the
          * CellMLComponent elements. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::CellMLComponentIterator>  iterateComponents() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -1375,7 +1370,8 @@ namespace libcellml
          * @param name The name of the CellMLComponent.
          * @return The CellMLComponent, or nil if not found.
          */
-    virtual std::shared_ptr<libcellml::CellMLComponent>  getComponent(const std::wstring& name) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLComponentIterator>  iterateComponents() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLComponent>  getComponent(const std::wstring& name) WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1395,7 +1391,7 @@ namespace libcellml
          * @return The next ImportComponent, or nil if there are no more
          *         ImportComponents.
          */
-    virtual std::shared_ptr<libcellml::ImportComponent>  nextImportComponent() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ImportComponent>  nextImportComponent() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1414,7 +1410,6 @@ namespace libcellml
          * Returns an ImportComponentIterator that can be used to iterate through
          * the ImportComponents. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::ImportComponentIterator>  iterateImportComponents() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -1422,7 +1417,8 @@ namespace libcellml
          * @param name The name of the component, as given by the importing model.
          * @return The element, or nil if not found.
          */
-    virtual std::shared_ptr<libcellml::ImportComponent>  getImportComponent(const std::wstring& name) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ImportComponentIterator>  iterateImportComponents() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ImportComponent>  getImportComponent(const std::wstring& name) WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1442,7 +1438,7 @@ namespace libcellml
          * @return The next CellMLVariable, or nil if there are no more
          *         CellMLVariable elements.
          */
-    virtual std::shared_ptr<libcellml::CellMLVariable>  nextVariable() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLVariable>  nextVariable() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1461,7 +1457,6 @@ namespace libcellml
          * Returns a CellMLVariableIterator that can be used to iterate through the
          * CellMLVariable elements. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::CellMLVariableIterator>  iterateVariables() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -1469,7 +1464,8 @@ namespace libcellml
          * @param name The name of the variable.
          * @return The CellMLVariable, or nil if not found.
          */
-    virtual std::shared_ptr<libcellml::CellMLVariable>  getVariable(const std::wstring& name) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLVariableIterator>  iterateVariables() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLVariable>  getVariable(const std::wstring& name) WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1489,7 +1485,7 @@ namespace libcellml
          * @return The next Units element, or nil if there are no more Units
          *         elements.
          */
-    virtual std::shared_ptr<libcellml::Units>  nextUnits() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Units>  nextUnits() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1508,7 +1504,6 @@ namespace libcellml
          * Returns a UnitsIterator that can be used to iterate through the
          * Units elements. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::UnitsIterator>  iterateUnits() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -1516,7 +1511,8 @@ namespace libcellml
          * @param name The name of the units.
          * @return The Units element, or nil if not found.
          */
-    virtual std::shared_ptr<libcellml::Units>  getUnits(const std::wstring& name) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::UnitsIterator>  iterateUnits() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Units>  getUnits(const std::wstring& name) WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1536,7 +1532,7 @@ namespace libcellml
          * @return The next ImportUnits element, or nil if there are no more
          * ImportUnits elements.
          */
-    virtual std::shared_ptr<libcellml::ImportUnits>  nextImportUnits() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ImportUnits>  nextImportUnits() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1555,7 +1551,6 @@ namespace libcellml
          * Returns an ImportUnitsIterator that can be used to iterate through the
          * ImportUnits elements. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::ImportUnitsIterator>  iterateImportUnits() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -1564,7 +1559,8 @@ namespace libcellml
          *             importing model.
          * @return The ImportUnits, or nil if not found.
          */
-    virtual std::shared_ptr<libcellml::ImportUnits>  getImportUnits(const std::wstring& name) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ImportUnitsIterator>  iterateImportUnits() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ImportUnits>  getImportUnits(const std::wstring& name) WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1583,7 +1579,7 @@ namespace libcellml
          * Fetches the next import, and advances the iterator.
          * @return The next import, or nil if there are no more imports.
          */
-    virtual std::shared_ptr<libcellml::CellMLImport>  nextImport() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLImport>  nextImport() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1602,7 +1598,7 @@ namespace libcellml
          * Returns a CellMLImportIterator that can be used to iterate through the
          * imports. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::CellMLImportIterator>  iterateImports() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::CellMLImportIterator>  iterateImports() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1622,7 +1618,7 @@ namespace libcellml
          * @return The next Unit element, or nil if there are no more Unit
          *         elements.
          */
-    virtual std::shared_ptr<libcellml::Unit>  nextUnit() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Unit>  nextUnit() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1641,7 +1637,7 @@ namespace libcellml
          * Returns a UnitIterator that can be used to iterate through the
          * unit elements. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::UnitIterator>  iterateUnits() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::UnitIterator>  iterateUnits() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1661,7 +1657,7 @@ namespace libcellml
          * @return The next Connection, or nil if there are no more Connection
          *         elements.
          */
-    virtual std::shared_ptr<libcellml::Connection>  nextConnection() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Connection>  nextConnection() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1680,7 +1676,7 @@ namespace libcellml
          * Returns a ConnectionIterator that can be used to iterate through the
          * connection elements. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::ConnectionIterator>  iterateConnections() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ConnectionIterator>  iterateConnections() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1700,7 +1696,7 @@ namespace libcellml
          * @return The next ComponentRef, or nil if there are no more
          *         ComponentRef elements.
          */
-    virtual std::shared_ptr<libcellml::ComponentRef>  nextComponentRef() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ComponentRef>  nextComponentRef() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1719,7 +1715,7 @@ namespace libcellml
          * Returns a ComponentRefIterator that can be used to iterate through the
          * ComponentRef elements. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::ComponentRefIterator>  iterateComponentRefs() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::ComponentRefIterator>  iterateComponentRefs() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1741,7 +1737,6 @@ namespace libcellml
          * @deprecated Use nextMapVariables(). This method may be removed from a
          *             future release of the CellML API.
          */
-    virtual std::shared_ptr<libcellml::MapVariables>  nextMapVariable() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -1749,7 +1744,8 @@ namespace libcellml
          * @return The next MapVariables element, or nil if there are no more
          *         MapVariables elements.
          */
-    virtual std::shared_ptr<libcellml::MapVariables>  nextMapVariables() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::MapVariables>  nextMapVariable() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::MapVariables>  nextMapVariables() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1768,7 +1764,7 @@ namespace libcellml
          * Returns a MapVariablesIterator that can be used to iterate through the
          * MapVariables elements. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::MapVariablesIterator>  iterateMapVariables() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::MapVariablesIterator>  iterateMapVariables() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1788,7 +1784,7 @@ namespace libcellml
          * @return The next VariableRef, or nil if there are no more VariableRef
          *         elements.
          */
-    virtual std::shared_ptr<libcellml::VariableRef>  nextVariableRef() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::VariableRef>  nextVariableRef() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1807,7 +1803,7 @@ namespace libcellml
          * Returns a VariableRefIterator that can be used to iterate through the
          * VariableRef elements. The iteration order is undefined.
          */
-    virtual std::shared_ptr<libcellml::VariableRefIterator>  iterateVariableRefs() throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::VariableRefIterator>  iterateVariableRefs() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1826,7 +1822,7 @@ namespace libcellml
          * Called when the model has been loaded.
          * @param m The model which has just been loaded.
          */
-    virtual void loadCompleted(libcellml::Model* m) throw(std::exception&) = 0;
+    virtual void loadCompleted(libcellml::Model* m) = 0;
   };
   
 
@@ -1845,7 +1841,7 @@ namespace libcellml
          * Called when the document has been loaded.
          * @param doc The document which has just been loaded.
          */
-    virtual void loadCompleted(dom::Document* doc) throw(std::exception&) = 0;
+    virtual void loadCompleted(dom::Document* doc) = 0;
   };
   
 
@@ -1868,7 +1864,6 @@ namespace libcellml
          * @return The loaded CellML model.
          * @exception CellMLException if the model cannot be loaded.
          */
-    virtual std::shared_ptr<libcellml::Model>  loadFromURL(const std::wstring& URL) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -1881,7 +1876,6 @@ namespace libcellml
          * @param listener A ModelLoadedListener to inform when loading completes.
          * @exception CellMLException if the model cannot be loaded.
          */
-    virtual void asyncLoadFromURL(const std::wstring& URL, libcellml::ModelLoadedListener* listener) throw(std::exception&) = 0;
     
 
     /**
@@ -1890,10 +1884,12 @@ namespace libcellml
          * @return The loaded CellML model.
          * @exception CellMLException if the XML cannot be parsed into a model.
          */
-    virtual std::shared_ptr<libcellml::Model>  createFromText(const std::wstring& xmlText) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::wstring lastErrorMessage() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Model>  loadFromURL(const std::wstring& URL) WARN_IF_RETURN_UNUSED = 0;
+    virtual void asyncLoadFromURL(const std::wstring& URL, libcellml::ModelLoadedListener* listener) = 0;
+    virtual std::shared_ptr<libcellml::Model>  createFromText(const std::wstring& xmlText) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::wstring lastErrorMessage() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1915,7 +1911,6 @@ namespace libcellml
          * @return The loaded document.
          * @exception CellMLException if the model cannot be loaded.
          */
-    virtual std::shared_ptr<dom::Document>  loadDocument(const std::wstring& URL) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -1925,7 +1920,6 @@ namespace libcellml
          * @return The loaded document.
          * @exception CellMLException if the model cannot be loaded.
          */
-    virtual std::shared_ptr<dom::Document>  loadDocumentFromText(const std::wstring& xmlText) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -1936,10 +1930,12 @@ namespace libcellml
          * @param listener The listener to notify when the load completes.
          * @exception CellMLException if the model cannot be loaded.
          */
-    virtual void asyncLoadDocument(const std::wstring& URL, libcellml::DocumentLoadedListener* listener) throw(std::exception&) = 0;
     
 
-    virtual std::wstring lastErrorMessage() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<dom::Document>  loadDocument(const std::wstring& URL) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<dom::Document>  loadDocumentFromText(const std::wstring& xmlText) WARN_IF_RETURN_UNUSED = 0;
+    virtual void asyncLoadDocument(const std::wstring& URL, libcellml::DocumentLoadedListener* listener) = 0;
+    virtual std::wstring lastErrorMessage() WARN_IF_RETURN_UNUSED = 0;
   };
   
 
@@ -1964,7 +1960,6 @@ namespace libcellml
          * @exception CellMLException if there is an error loading the model or the
          *                            DOM document.
          */
-    virtual std::shared_ptr<libcellml::Model>  createFromDOM(const std::wstring& url, libcellml::DOMURLLoader* loader) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -1974,7 +1969,6 @@ namespace libcellml
          * @exception CellMLException if there is an error creating the model from
          *                            the DOM document.
          */
-    virtual std::shared_ptr<libcellml::Model>  createFromDOMDocument(dom::Document* doc) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -1987,7 +1981,9 @@ namespace libcellml
          * @exception CellMLException if there is an error loading the model or the
          *                            DOM document.
          */
-    virtual void asyncCreateFromDOM(const std::wstring& url, libcellml::DOMURLLoader* loader, libcellml::ModelLoadedListener* listener) throw(std::exception&) = 0;
+    virtual std::shared_ptr<libcellml::Model>  createFromDOM(const std::wstring& url, libcellml::DOMURLLoader* loader) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Model>  createFromDOMDocument(dom::Document* doc) WARN_IF_RETURN_UNUSED = 0;
+    virtual void asyncCreateFromDOM(const std::wstring& url, libcellml::DOMURLLoader* loader, libcellml::ModelLoadedListener* listener) = 0;
   };
   
 
@@ -2002,13 +1998,10 @@ namespace libcellml
     virtual ~CellMLBootstrap() {}
     
 
-    virtual std::shared_ptr<libcellml::DOMModelLoader>  modelLoader() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<dom::DOMImplementation>  domImplementation() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
-    virtual std::shared_ptr<libcellml::DOMURLLoader>  localURLLoader() throw(std::exception&)  WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -2017,7 +2010,6 @@ namespace libcellml
          *                1.0 or 1.1.
          * @exception CellMLException If an invalid version is given.
          */
-    virtual std::shared_ptr<libcellml::Model>  createModel(const std::wstring& version) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -2026,7 +2018,6 @@ namespace libcellml
          * @param node The DOM node to serialise.
          * @return The node, as a serialised string.
          */
-    virtual std::wstring serialiseNode(dom::Node* node) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
     
 
     /**
@@ -2036,7 +2027,12 @@ namespace libcellml
          * @param relURL A possibly relative URL to make absolute.
          * @return An absolute URL, if it is possible to produce one, otherwise a relative one.
          */
-    virtual std::wstring makeURLAbsolute(const std::wstring& relTo, const std::wstring& relURL) throw(std::exception&) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::DOMModelLoader>  modelLoader() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<dom::DOMImplementation>  domImplementation() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::DOMURLLoader>  localURLLoader() WARN_IF_RETURN_UNUSED = 0;
+    virtual std::shared_ptr<libcellml::Model>  createModel(const std::wstring& version) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::wstring serialiseNode(dom::Node* node) WARN_IF_RETURN_UNUSED = 0;
+    virtual std::wstring makeURLAbsolute(const std::wstring& relTo, const std::wstring& relURL) WARN_IF_RETURN_UNUSED = 0;
   };
 };
 #endif // guard
